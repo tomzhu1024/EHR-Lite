@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="./login.css">
-    </head>
-    <body>
-        <div id="main">
-            <div id="main-container">
-                <div id="left-container">
-                    <div id="logo-wrapper">
-                    </div>
-                </div>
-                <div id="right-container">
-                    <div id="form-wrapper">
-                        <h1>
-                            Hello world
-                        </h1>
-                    </div>
-                </div>
-            </div>
-            <div id="main-footer">
 
+<head>
+    <link rel="stylesheet" href="./login.css">
+</head>
+
+<body>
+    <div id="main">
+        <div id="main-container">
+            <div id="left-container">
+                <div id="logo-wrapper">
+                    <img src="../img/logo.png" alt="EHR_LOGO" id="logo">
+                </div>
             </div>
+            <div id="right-container">
+                <div id="form-wrapper">
+                    <form action="POST">
+                        <input type="text" id="email" class="form-item1">
+                        <br>
+                        <input type="password" id="password" class="form-item1">
+                        <br>
+                        <button id="login-button" class="form-item2">
+                            Log In
+                        </button>
+                        <div id="form-text">
+                            <h5>
+                                Forget your password?
+                            </h5>
+                        </div>
+                        <div>
+                            <div class="hr">
+                            </div>
+                        </div>
+                        <button id="create-button" class="form-item2">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="clearfix">
         </div>
-    </body>
+        <div id="main-footer">
+            <h5>
+                EHR Lite ® 2020
+            </h5>
+        </div>
+    </div>
+</body>
+
 </html>
