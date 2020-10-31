@@ -19,14 +19,14 @@
   scroll-behavior: smooth;
 }
 
-a{
-    color: rgb(40, 40, 40);
-    font-family: Arial, Helvetica, sans-serif;
+a {
+  color: rgb(40, 40, 40);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-a:visited{
-    color: rgb(40, 40, 40);
-    font-family: Arial, Helvetica, sans-serif;
+a:visited {
+  color: rgb(40, 40, 40);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #main {
@@ -88,8 +88,8 @@ a:visited{
 }
 
 #main #main-container {
-    position: relative;
-    top: 90px;
+  position: relative;
+  top: 90px;
   background-color: rgb(240, 240, 240);
   border: 1px solid rgb(240, 240, 240);
 }
@@ -195,8 +195,8 @@ a:visited{
 }
 
 #main #main-container #gallery-wrapper #gallery-title {
-    margin-top: 30px;
-    margin-left: 70px;
+  margin-top: 30px;
+  margin-left: 70px;
   /* border: 1px solid black; */
 }
 
