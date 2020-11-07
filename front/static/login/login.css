@@ -92,9 +92,12 @@
 }
 
 #main #main-container #right-container #form-prewrapper {
+  /* -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+  
   background-color: #ffffff;
   border: 0.1px solid #ffffff;
-  border-radius: 0px 20px 0px 0px;
+  /* border-radius: 0px 20px 0px 0px; */
   height: 550px;
 }
 
