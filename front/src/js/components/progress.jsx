@@ -33,12 +33,12 @@ function Progress(props) {
             <p>Book Appointment</p>
           </li>
           <li>
-            <img src={checkinImg} alt="Signin" class={style["progress-img"]} />
+            <img src={checkinImg} alt="Signin" className={style["progress-img"]} />
             <br />
             <img
               src={inProgressImg}
               alt="Completed"
-              class={style["status-img"]}
+              className={style["status-img"]}
             />
             <p>Sign In At Hospital</p>
           </li>
@@ -46,13 +46,13 @@ function Progress(props) {
             <img
               src={diagnoseImg}
               alt="Diagnosis"
-              class={style["progress-img"]}
+              className={style["progress-img"]}
             />
             <br />
             <img
               src={upcomingImg}
               alt="Completed"
-              class={style["status-img"]}
+              className={style["status-img"]}
             />
             <p>See Doctor</p>
           </li>
@@ -60,13 +60,13 @@ function Progress(props) {
             <img
               src={medicineImg}
               alt="Prescription"
-              class={style["progress-img"]}
+              className={style["progress-img"]}
             />
             <br />
             <img
               src={upcomingImg}
               alt="Completed"
-              class={style["status-img"]}
+              className={style["status-img"]}
             />
             <p>Get Medicine</p>
           </li>
