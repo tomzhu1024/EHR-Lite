@@ -3,34 +3,28 @@
   overflow: hidden;
 }
 
-#tabs button {
-  border: none;
-  color: rgb(240, 240, 240);
-  height: 50px;
-  width: 100px;
-  border-left: 1px solid rgb(248, 248, 248);
-  border-radius: 0px 15px 0px 0px;
+#tabs .tabs-item{
   float: left;
-  font-size: large;
-  background-color: rgb(39, 167, 225);
-  box-shadow: 4px 5px 4px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* #tab ul li.active {
-  background-color: rgb(240, 240, 240);
-} */
-
-#tab ul li:hover {
-  background-color: rgb(23, 119, 242);
-}
-
-#container {
+#container-l {
   background-color: #ffffff;
   border: 0.1px solid #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   /* border-radius: 0px 20px 0px 0px; */
   width: 570px;
   height: 550px;
+  transition: height 1s;
+}
+
+#container-s {
+  background-color: #ffffff;
+  border: 0.1px solid #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  /* border-radius: 0px 20px 0px 0px; */
+  width: 570px;
+  height: 400px;
+  transition: height 1s;
 }
 
 #wrapper {
