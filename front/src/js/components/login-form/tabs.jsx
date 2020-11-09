@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../css/tabs.module.css";
+import style from "../../../css/login-form/tabs.module.css";
 
 function Tabs(props) {
   return (

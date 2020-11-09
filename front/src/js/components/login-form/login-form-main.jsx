@@ -1,6 +1,6 @@
 import React from "react";
 import Tabs from "./tabs.jsx";
-import style from "../../css/login-form.module.css";
+import style from "../../../css/login-form/login-form-main.module.css";
 
 // function is needed for selecting tab from the list of tabs
 

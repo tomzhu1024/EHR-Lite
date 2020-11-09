@@ -1,14 +1,17 @@
 import React from "react";
-import style from "../../css/progress.module.css";
-import appointmentImg from "../../img/appointment.png";
-import diagnoseImg from "../../img/diagnose.png";
-import checkinImg from "../../img/checkin.png";
-import medicineImg from "../../img/medicine.png";
-import completedImg from "../../img/completed.png";
-import upcomingImg from "../../img/upcoming.png";
-import inProgressImg from "../../img/inProgress.png";
+import style from "../../../css/progress-bar/progress-bar-main.module.css";
+import appointmentImg from "../../../img/appointment.png";
+import diagnoseImg from "../../../img/diagnose.png";
+import checkinImg from "../../../img/checkin.png";
+import medicineImg from "../../../img/medicine.png";
+import completedImg from "../../../img/completed.png";
+import upcomingImg from "../../../img/upcoming.png";
+import inProgressImg from "../../../img/inProgress.png";
 
 function Progress(props) {
+
+  const current_progress = props.progress;
+
   return (
     <div id={style["progress-container"]}>
       <div id={style["progress-wrapper"]}>
