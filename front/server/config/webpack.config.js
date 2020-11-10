@@ -9,10 +9,10 @@ const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        index: resolve(PROJECT_ROOT, './src/js/index.tsx')
+        app: resolve(PROJECT_ROOT, 'src/js/index.tsx')
     },
     output: {
-        path: resolve(PROJECT_ROOT, './build'),
+        path: resolve(PROJECT_ROOT, 'build'),
         publicPath: '/',
         filename: '[name].[hash].bundle.js'
     },
@@ -89,34 +89,23 @@ module.exports = {
     },
     plugins: [
         new WebpackBar({
-            color: IS_DEV ? "#fff300" : "#00fff7",
+            color: IS_DEV ? '#fff300' : '#00fff7',
         }),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
         }),
         new FriendlyErrorsPlugin(),
-        new MiniCssExtractPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: resolve(PROJECT_ROOT, './public'),
-                    to: resolve(PROJECT_ROOT, './build'),
-                    force: true
-                }
-            ]
-        }),
         new HtmlWebpackPlugin({
-            template: resolve(PROJECT_ROOT, './src/html/index.ejs'),
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
             filename: 'index.html',
-            chunks: ['index'],
+            chunks: ['app'],
             minify: {
                 collapseWhitespace: true
             }
         })
     ],
     resolve: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-        mainFiles: ["index"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
         alias: {
             'react-dom': '@hot-loader/react-dom'
         }

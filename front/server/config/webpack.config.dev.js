@@ -8,7 +8,7 @@ module.exports = merge(baseCfg, {
     mode: 'development',
     devtool: 'eval-cheap-module-source-map',
     devServer: {
-        contentBase: resolve(PROJECT_ROOT, './build'),
+        contentBase: resolve(PROJECT_ROOT, 'build'),
         port: 9000,
         hot: true,
         quiet: true,
