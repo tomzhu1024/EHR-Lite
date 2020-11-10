@@ -1,12 +1,12 @@
 import React from "react";
 import style from "../../../css/progress-bar/progress-item.module.css";
-import appointmentImg from "../../../img/appointment.png";
-import diagnoseImg from "../../../img/diagnose.png";
-import checkinImg from "../../../img/checkin.png";
-import medicineImg from "../../../img/medicine.png";
-import completedImg from "../../../img/completed.png";
-import upcomingImg from "../../../img/upcoming.png";
-import inProgressImg from "../../../img/inProgress.png";
+import appointmentImg from "../../../assets/appointment.png";
+import diagnoseImg from "../../../assets/diagnose.png";
+import checkinImg from "../../../assets/checkin.png";
+import medicineImg from "../../../assets/medicine.png";
+import completedImg from "../../../assets/completed.png";
+import upcomingImg from "../../../assets/upcoming.png";
+import inProgressImg from "../../../assets/inProgress.png";
 
 function ProgressItem(props) {
   const progressTitle = [

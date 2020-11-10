@@ -3,54 +3,29 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackBar = require('webpackbar');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const {HotModuleReplacementPlugin} = require('webpack');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const {HashedModuleIdsPlugin} = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+const WebpackBar = require('webpackbar');
+const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        index: resolve(__dirname, 'src/js/index.jsx')
+        index: resolve(PROJECT_ROOT, './src/js/index.tsx')
     },
     output: {
+        path: resolve(PROJECT_ROOT, './build'),
         publicPath: '/',
-        path: resolve(__dirname, 'build'),
         filename: '[name].[hash].bundle.js'
-    },
-    devtool: 'cheap-module-source-map',
-    devServer: {
-        contentBase: resolve(__dirname, 'build'),
-        compress: true,
-        port: 9000,
-        hot: true,
-        quiet: true,
-        stats: false,
-        writeToDisk: true
     },
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            '@babel/preset-env',
-                            '@babel/preset-react'
-                        ],
-                        plugins: [
-                            'babel-plugin-lodash',
-                            'react-hot-loader/babel',
-                            ['@babel/plugin-proposal-decorators', {legacy: true}],
-                            ['@babel/plugin-proposal-class-properties', {loose: true}],
-                            ['babel-plugin-import', {libraryName: 'antd'}]
-                        ]
-                    }
-                },
+                use: ['babel-loader'],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.tsx?$/,
+                use: ['awesome-typescript-loader'],
                 exclude: /node_modules/
             },
             {
@@ -69,14 +44,14 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
                     'css-loader'
                 ]
             },
             {
                 test: /\.s[ac]ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -89,7 +64,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: {
@@ -101,8 +76,8 @@ module.exports = {
                         options: {
                             lessOptions: {
                                 modifyVars: {
-                                    'primary-color': '#3835d0',
-                                    'link-color': '#3835d0',
+                                    'primary-color': '#09d0db',
+                                    'link-color': '#09d0db',
                                 },
                                 javascriptEnabled: true
                             }
@@ -113,61 +88,37 @@ module.exports = {
         ]
     },
     plugins: [
-        new HotModuleReplacementPlugin(),
+        new WebpackBar({
+            color: IS_DEV ? "#fff300" : "#00fff7",
+        }),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
         }),
-        new WebpackBar({
-            name: 'Compiling',
-            color: '#00fff7'
-        }),
         new FriendlyErrorsPlugin(),
         new MiniCssExtractPlugin(),
-        new HashedModuleIdsPlugin({
-            context: resolve(__dirname, 'src'),
-            hashFunction: 'sha256',
-            hashDigest: 'hex',
-            hashDigestLength: 20
-        }),
-        new LodashModuleReplacementPlugin,
-        new AntdDayjsWebpackPlugin(),
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: resolve(__dirname, 'public'),
-                    to: resolve(__dirname, 'build'),
+                    from: resolve(PROJECT_ROOT, './public'),
+                    to: resolve(PROJECT_ROOT, './build'),
                     force: true
                 }
             ]
         }),
         new HtmlWebpackPlugin({
-            template: resolve(__dirname, 'src/html/index.ejs'),
+            template: resolve(PROJECT_ROOT, './src/html/index.ejs'),
             filename: 'index.html',
             chunks: ['index'],
-            title: 'Index Page',
             minify: {
                 collapseWhitespace: true
             }
         })
     ],
     resolve: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        mainFiles: ["index"],
         alias: {
             'react-dom': '@hot-loader/react-dom'
         }
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                extractComments: false
-            }),
-            new OptimizeCSSAssetsPlugin()
-        ],
-        splitChunks: {
-            chunks: 'async'
-        }
-    },
-    performance: {
-        hints: false
     }
 }
