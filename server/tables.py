@@ -1,8 +1,9 @@
 from server import db
 import datetime
+from flask_login import UserMixin
 
 
-class Patient(db.Model):
+class Patient(db.Model, UserMixin):
     __tablename__ = 'patient'
     patient_id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(50), nullable=False)
@@ -12,8 +13,11 @@ class Patient(db.Model):
     def __repr__(self):
         return self.name
 
+    def get_id(self):
+        return str(self.patient_id)
 
-class Docter(db.Model):
+
+class Docter(db.Model, UserMixin):
     __tablename__ = "docter"
     doctor_id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(50), nullable=False)
@@ -23,6 +27,9 @@ class Docter(db.Model):
 
     def __repr__(self):
         return self.name
+
+    def get_id(self):
+        return self.doctor_id
 
 
 class Schedule(db.Model):
