@@ -5,7 +5,7 @@ import "../css/index.less";
 import LoginForm from "./components/login-form/login-form-main.jsx";
 // import Footer from "./components/footer.jsx";
 import Progress from "./components/progress-bar/progress-bar-main.jsx";
-// // import Calendar from "./components/calendar-form.jsx";
+import CalendarForm from "./components/calendar-form.jsx";
 // import Department from "./components/department.jsx";
 // import DepartmentList from './components/department-list.jsx'
 
@@ -14,7 +14,8 @@ import Tabs from './components/login-form/tabs.jsx';
 const App = () => {
   return (
     <React.Fragment>
-      <LoginForm />
+      <CalendarForm />
+      {/* <LoginForm /> */}
       {/* <Progress /> */}
         {/* <DepartmentList /> */}
       {/* <Department name={"Oncology"}/> */}

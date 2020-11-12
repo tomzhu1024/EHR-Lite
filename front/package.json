@@ -54,5 +54,7 @@
     "webpackbar": "^4.0.0",
     "yargs": "^16.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "less": "^3.12.2"
+  }
 }
