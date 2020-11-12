@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../img/EHRLiteLOGO.png";
+import Logo from "../../assets/EHRLiteLOGO.png";
 import style from "../../css/navbar-top.module.css";
 
 function Navbar(props) {
