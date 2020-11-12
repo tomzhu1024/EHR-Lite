@@ -14,7 +14,7 @@
   /* border-radius: 0px 20px 0px 0px; */
   width: 570px;
   height: 550px;
-  transition: height 1s;
+  transition: height 0.3s;
 }
 
 #container-s {
@@ -24,7 +24,7 @@
   /* border-radius: 0px 20px 0px 0px; */
   width: 570px;
   height: 400px;
-  transition: height 1s;
+  transition: height 0.5s;
 }
 
 #wrapper {

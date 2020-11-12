@@ -14,8 +14,8 @@ import Tabs from './components/login-form/tabs.jsx';
 const App = () => {
   return (
     <React.Fragment>
-      {/* <LoginForm /> */}
-      <Progress />
+      <LoginForm />
+      {/* <Progress /> */}
         {/* <DepartmentList /> */}
       {/* <Department name={"Oncology"}/> */}
       {/* <Tabs title={"Doctor"} id={1} selected={1} onClick={handleClick} />
