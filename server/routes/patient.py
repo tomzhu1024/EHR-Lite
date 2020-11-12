@@ -87,7 +87,14 @@ def patient_register():
                        error_message=None)
 
 
-@app.route("/patient/getSlots")
+@app.route('/patient/getDepartmentList', methods=['GET'])
+def patient_get_department_list():
+    departs = Doctor.query.with_entities(Doctor.department).distinct().all()
+    return jsonify(success=True,
+                   data=departs)
+
+
+@app.route("/patient/getSlots", methods=['POST'])
 @login_required
 def patient_get_slots():
     try:
