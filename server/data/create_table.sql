@@ -46,10 +46,13 @@ CREATE TABLE `appointment`(
 	`drug` VARCHAR(500),
 	`stage` INT NOT NULL,
 	`schedule_id` INT NOT NULL,
+	`schedule_date` DATE NOT NULL,
 	`check_in_time` DATETIME,
 	PRIMARY KEY(`appointment_id`),
 	FOREIGN KEY(`record_id`) REFERENCES `record`(`record_id`),
 	FOREIGN KEY(`schedule_id`) REFERENCES `schedule`(`schedule_id`)
+    FOREIGN KEY(`doctor_id`) REFERENCES `doctor`(`doctor_id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
