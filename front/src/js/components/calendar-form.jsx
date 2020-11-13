@@ -1,47 +1,86 @@
 import React from "react";
-import { Calendar, List, Divider, Collapse } from "antd";
+import { Calendar, Divider, Empty, Menu } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
 import "antd/dist/result.css";
 import style from "../../css/calendar-form.module.css";
 
-const { Panel } = Collapse;
+const { SubMenu } = Menu;
+const data = [
+    ["9:00 - 10:00", ["Doctor Smith"]],
+    ["10:00 - 11:00", ["Doctor Wang"]],
+    ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ];
+
+function onSelectSlot(item) {
+  // get the selected doctor & time slot
+  let x, y, num = 0;
+  const key = parseInt(item.key);
+  data.forEach((e, i) => {
+    num ++;
+    e[1].forEach((se, si) => {
+      num ++;
+      console.log(num);
+      if (num === key){
+        console.log("matched");
+      }
+    })
+  })
+}
+
+function onSelectDate(item){
+  const date = item._d;
+  console.log(date);
+}
 
 function CalendarForm(props) {
-  const data = [
-    "9:00 - 10:00",
-    "10:00 - 11:00",
-    "11:00 - 12:00",
-    "14:00 - 15:00",
-    "15:00 - 16:00",
-    "16:00 - 17:00",
-  ];
-  const doctors = ["Doctor Smith", "Doctor Wang", "Doctor Chen"];
+  // specify the list of time slots here
+  let num = 0;
   return (
     <div className={style["calendar-form-wrapper"]}>
       <div className={style["date-container"]}>
-        <Calendar fullscreen={false} onSelect={onSelect} />
+        <Calendar fullscreen={false} onSelect={onSelectDate} />
       </div>
       <Divider orientation="center">Available Slots</Divider>
       <div className={style["timeslots-container"]}>
-        <Collapse bordered={false} defaultActiveKey={["1"]}>
-          {data.map((e, i) => {
-            return (
-              <Panel header={e} key={i}>
-                <p className={style["doctor-list"]}>{doctors[i]}</p>
-              </Panel>
-            );
-          })}
-        </Collapse>
+        {data[0] === -1 ? (
+          // display empty if there is no available time slot
+          <Empty
+            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            imageStyle={{
+              height: 60,
+            }}
+            description={<span>No available time slot today</span>}
+          ></Empty>
+        ) : (
+          <Menu
+            style={{ width: 400 }}
+            multiple={false}
+            defaultSelectedKeys={["1"]}
+            mode={"inline"}
+            theme={"light"}
+            onClick={onSelectSlot}
+          >
+            {data.map((e, i) => {
+              num ++;
+              return (
+                <SubMenu
+                  key={num}
+                  title={e[0]}
+                  icon={<CalendarOutlined  />}
+                >
+                  {e[1].map((se, si) => {
+                    num ++;
+                    return <Menu.Item key={num}>{se}</Menu.Item>;
+                  })}
+                </SubMenu>
+              );
+            })}
+          </Menu>
+        )}
       </div>
     </div>
   );
 }
 
-function callback(key) {
-  console.log(key);
-}
-
-function onSelect(value, mode) {
-  console.log(value, mode);
-}
 
 export default CalendarForm;
