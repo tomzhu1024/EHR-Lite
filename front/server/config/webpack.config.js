@@ -9,7 +9,7 @@ const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        app: resolve(PROJECT_ROOT, 'src/js/index.tsx')
+        app: resolve(PROJECT_ROOT, 'src/js/app.tsx')
     },
     output: {
         path: resolve(PROJECT_ROOT, 'build'),
