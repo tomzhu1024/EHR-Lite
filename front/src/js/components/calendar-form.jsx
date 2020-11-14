@@ -53,7 +53,7 @@ function CalendarForm(props) {
           ></Empty>
         ) : (
           <Menu
-            style={{ width: 400 }}
+            style={{ width: 450 }}
             multiple={false}
             defaultSelectedKeys={["1"]}
             mode={"inline"}

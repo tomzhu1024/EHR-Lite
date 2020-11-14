@@ -1,5 +1,7 @@
 .calendar-form-wrapper{
-    width: 400px;
+    width: 450px;
+    height: 700px;
+    overflow: scroll;
 }
 
 .date-container{

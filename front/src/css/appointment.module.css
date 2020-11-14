@@ -1,0 +1,11 @@
+.department-list {
+  float: left;
+}
+
+.calendar-form {
+  float: left;
+}
+
+.clear-fix {
+  clear: both;
+}

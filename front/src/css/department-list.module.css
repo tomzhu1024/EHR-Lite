@@ -4,25 +4,28 @@
   padding: 0;
 }
 
-#mainContainer {
-    border: 1px solid black;
+#main-container {
+    /* border: 1px solid black; */
     width: 450px;
-    height: 500px;
+    height: 700px;
+    overflow: scroll;
     /* width: ; */
 }
 
-#mainContainer #titleWrapper {
-    background-color: rgb(250, 250, 250);
-    border: 1px solid black;
-    width: 350px;
+#main-container #title-wrapper {
+    /* background-color: rgb(250, 250, 250); */
+    /* text-align: center; */
+    margin-top: 20px;
+    width: 450px;
 }
 
-#mainContainer #titleWrapper h1 {
+#main-container #title-wrapper h1 {
     text-align: center;
     font-size: x-large;
     color: rgb(30, 30, 30);
 }
 
-#mainContainer #listWrapper {
+#main-container #list-wrapper {
     overflow: hidden;
+    width: 450px;
 }
