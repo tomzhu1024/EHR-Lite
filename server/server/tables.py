@@ -1,6 +1,8 @@
-from server import db
 import datetime
+
 from flask_login import UserMixin
+
+from server import db
 
 
 class Patient(db.Model, UserMixin):
@@ -43,8 +45,6 @@ class Doctor(db.Model, UserMixin):
             if i.weekday == date.weekday() and i.is_available_on(date):
                 slots.append(i)
         return slots
-
-
 
 
 class Schedule(db.Model):

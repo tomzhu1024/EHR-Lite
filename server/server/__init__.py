@@ -1,7 +1,7 @@
-from flask import Flask, session
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
 import pymysql
+from flask import Flask, session
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://test:se-dev-8899@dev.tomzhu.site:3306/EHR_Lite"
@@ -35,6 +35,3 @@ def load_user(user_id):
         return Doctor.query.get(int(user_id))
     else:
         raise Exception
-
-
-

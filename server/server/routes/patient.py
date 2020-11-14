@@ -1,9 +1,12 @@
-from server import app, db
-from flask import request, jsonify
-from server.tables import Patient, Doctor
-from flask_login import logout_user, login_required
-from hashlib import md5
 import datetime
+from hashlib import md5
+
+from flask import request, jsonify
+from flask_login import logout_user, login_required
+
+from server import app, db
+from server.tables import Patient, Doctor
+
 
 @app.route("/patient/login", methods=['POST'])
 def patient_login():
@@ -49,10 +52,10 @@ def patient_login():
     else:
         if patient.password != md5(password.encode()).hexdigest():
             return jsonify(verify=False,
-                       error_message='Wrong password')
+                           error_message='Wrong password')
         else:
             return jsonify(verify=True,
-                    error_message=None)
+                           error_message=None)
 
 
 @app.route("/patient/register", methods=['POST'])
@@ -81,7 +84,7 @@ def patient_register():
             db.session.commit()
         except:
             return jsonify(success=False,
-                       error_message='Unable to add in database')
+                           error_message='Unable to add in database')
 
         return jsonify(success=True,
                        error_message=None)
