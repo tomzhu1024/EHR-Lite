@@ -1,6 +1,5 @@
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
-from flasgger import Swagger
 from flask_login import LoginManager
 import pymysql
 

@@ -1,7 +1,7 @@
-from server import app, db, conn
-from flask import session, request, jsonify
-from server.tables import Patient, Doctor, Schedule
-from flask_login import login_user, logout_user, login_required, current_user
+from server import app, db
+from flask import request, jsonify
+from server.tables import Patient, Doctor
+from flask_login import logout_user, login_required
 from hashlib import md5
 import datetime
 
