@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import style from "../queue.module.scss";
+import style from "../doctor.module.scss";
 import { Table } from 'react-bootstrap';
 import { InputGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
