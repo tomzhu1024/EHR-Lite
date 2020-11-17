@@ -1,0 +1,45 @@
+$font-stack: Helvetica, sans-serif;
+
+$current-color: rgb(20, 231, 161);
+$next-color: rgb(19, 121, 236);
+
+%margin-box {
+  margin-top: 18px;
+  margin-left: 2%;
+}
+
+%type-shared {
+  width: 30%;
+  float: left;
+}
+
+.queue-state-box {
+  @extend %margin-box;
+  width: 200px;
+  height: 40px;
+  border: 0px;
+  border-radius: 3px;
+  line-height: 40px;
+  text-align: center;
+  background: $current-color;
+  box-shadow: 3px 5px #bbbbbb;
+  p {
+    font-size: large;
+    font-weight: 800;
+  }
+}
+
+.box {
+  @extend %margin-box;
+  @extend %type-shared;
+}
+
+.type1 {
+  @extend %type-shared;
+  margin-left: 34%;
+}
+
+.type2 {
+  @extend %type-shared;
+  margin-left: 2%;
+}
