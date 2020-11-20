@@ -24,14 +24,19 @@ from server.routes.patient import *
 from server.routes.doctor import *
 from server.routes.staff import *
 from server.routes.admin import *
-from server.tables import Patient, Doctor
+from server.tables import Patient, Doctor, Admin
 
 
 @loginManager.user_loader
 def load_user(user_id):
-    if session['user_type'] == 'patient':
+    if user_id.startswith('Patient'):
+        user_id = user_id.lstrip('Patient')
         return Patient.query.get(int(user_id))
-    elif session['user_type'] == 'doctor':
+    elif user_id.startswith('Doctor'):
+        user_id = user_id.lstrip('Doctor')
         return Doctor.query.get(int(user_id))
+    elif user_id.startswith('Admin'):
+        user_id = user_id.lstrip('Admin')
+        return Admin.query.get(int(user_id))
     else:
         raise Exception

@@ -1,61 +1,40 @@
 import datetime
 from hashlib import md5
 
-from flask import request, jsonify
-from flask_login import logout_user, login_required
+from flask import request, jsonify, session
+from flask_login import logout_user, login_required, current_user, login_user
 
 from server import app, db
-from server.tables import Patient, Doctor
+from server.tables import Patient, Doctor, Record, Schedule
 
 
 @app.route("/patient/login", methods=['POST'])
 def patient_login():
-    """
-        ---
-        tags:
-          - Patient
-        parameters:
-          - name: id
-            in: query
-            type: int
-            required: true
-            description: The identification number for patient
-          - name: password
-            in: query
-            type: string
-            required: true
-        responses:
-          500:
-            description: Internal Error
-          200:
-            description: Successful login
-            schema:
-              properties:
-                verify:
-                  type: boolean
-                  description: The user entered the right password
-                error_message:
-                  type: string
-                  description: Whatever reason user is not successful in logging in
-
-    """
     try:
         patient_id = int(request.form['id'])
         password = request.form['password']
     except:
-        return jsonify(verify=False,
+        return jsonify(success=False,
                        error_message='Invalid input')
     patient = Patient.query.filter_by(patient_id=patient_id).first()
     if not patient:
-        return jsonify(verify=False,
+        return jsonify(success=False,
                        error_message='No such patient')
     else:
         if patient.password != md5(password.encode()).hexdigest():
-            return jsonify(verify=False,
+            return jsonify(success=False,
                            error_message='Wrong password')
         else:
-            return jsonify(verify=True,
-                           error_message=None)
+            login_user(patient)
+            session['patient_id'] = patient.patient_id
+            return jsonify(success=True)
+
+
+@app.route("/patient/logout", methods=['GET'])
+@login_required
+def patient_logout():
+    logout_user()
+    return jsonify(success=True)
 
 
 @app.route("/patient/register", methods=['POST'])
@@ -90,6 +69,7 @@ def patient_register():
                        error_message=None)
 
 
+@login_required
 @app.route('/patient/getDepartmentList', methods=['GET'])
 def patient_get_department_list():
     departs = Doctor.query.with_entities(Doctor.department).distinct().all()
@@ -97,13 +77,13 @@ def patient_get_department_list():
                    data=departs)
 
 
-@app.route("/patient/getSlots", methods=['POST'])
 @login_required
+@app.route("/patient/getSlots", methods=['POST'])
 def patient_get_slots():
     try:
         department = request.form['department']
         date = request.form['date']
-        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
     except:
         return jsonify(success=False,
                        error_message='Invalid input')
@@ -119,9 +99,70 @@ def patient_get_slots():
                    data=slots)
 
 
-@app.route("/patient/logout", methods=['GET'])
 @login_required
-def patient_logout():
-    logout_user()
+@app.route('/patient/appointment/reservation', methods=['POST'])
+def patient_make_reservation():
+    try:
+        schedule_id = int(request.form['schedule_id'])
+        schedule_date = datetime.datetime.strptime(request.form['date'], '%Y-%m-%d').date()
+    except:
+        return jsonify(success=False,
+                       error_message='Invalid input')
+    try:
+        patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+        record = patient.new_record()
+        patient.new_appointment(record_id=record.record_id, schedule_id=schedule_id, schedule_date=schedule_date)
+    except:
+        return jsonify(success=False,
+                       error_message='server error')
+    return jsonify(success=True)
+
+
+@app.route("/patient/getRecord", methods=['GET'])
+@login_required
+def patient_get_record():
+    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    records = patient.records
+    data = [{'record_id': record.record_id, 'date': record.date, 'stage': record.stage} for record in records]
     return jsonify(success=True,
-                   error_message=None)
+                   data=data)
+
+
+@app.route("/patient/getAppointment", methods=['POST'])
+@login_required
+def patient_get_appointment():
+    try:
+        record_id = int(request.form['id'])
+    except:
+        return jsonify(success=False,
+                       error_message='Invalid input')
+    record = Record.query.filter_by(record_id=record_id).first()
+    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    if not record:
+        return jsonify(success=False,
+                       error_message="Can't find such record")
+    if record.patient != patient:
+        return jsonify(success=False,
+                       error_message="Invalid input")
+    data = [{'appointment_id': appointment.appointment_id, 'doctor_id': appointment.doctor_id,
+             'doctor_name': appointment.doctor.name, 'diagnosis': appointment.diagnosis, 'stage': appointment.stage,
+             'drug': appointment.drug} for appointment in record.appointments]
+    return jsonify(success=True,
+                   data=data)
+
+
+@app.route("/patient/checkQueue", methods=['GET'])
+@login_required
+def patient_get_position():
+    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    appoint = patient.current_appointment()
+    if not appoint or appoint.stage != 'In Queue':
+        return jsonify(success=False,
+                       error_message='Not in a queue')
+    else:
+        position = patient.position(appoint)
+        return jsonify(success=True,
+                       data=position)
+
+
+
