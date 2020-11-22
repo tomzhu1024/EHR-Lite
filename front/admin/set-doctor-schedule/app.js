@@ -2,24 +2,26 @@ function scheduleList() {
     let schedule = "";
     const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     for (let i = 0; i < 5; i++) {
-        schedule += '<div class="text-i">' + weekdays[i] + '</div>'
+        let day = weekdays[i];
+        schedule += '<div class="text-i">' + day + '</div>'
         schedule += '<span class="text-ii">Start: </span>'
-        schedule += '<select class="dropdown-menu">'
+        schedule += `<select class="dropdown-menu" name="${day}-start">`
         for (let j = 9; j < 17; j++) {
-            let tmp = j.toString()
-            schedule += '<option>' + tmp + '</option>'
+            let time = j.toString()
+            schedule += `<option value="${time}">${time}</option>`
         }
         schedule += '</select>'
         schedule += '<span class="text-ii">Finish: </span>'
-        schedule += '<select class="dropdown-menu">'
+        schedule += `<select class="dropdown-menu" name="${day}-end">`
         for (let j = 9; j < 17; j++) {
-            let tmp = j.toString()
-            schedule += '<option>' + tmp + '</option>'
+            let time = j.toString()
+            schedule += `<option value="${time}-end">${time}</option>`
         }
         schedule += '</select>'
-        schedule += '<span class="text-ii">Capacity: </span><select class="dropdown-menu">'
+        schedule += `<span class="text-ii" name="${day}-capacity">Capacity: </span><select class="dropdown-menu">`
         for (let i = 0; i < 20; i++) {
-            schedule += '<option>' + i.toString() + '</option>'
+            const cap = i.toString();
+            schedule += `<option value="${cap}">${cap}</option>`
         }
         schedule += '</select>'
     }
