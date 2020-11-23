@@ -2,10 +2,10 @@ import datetime
 from hashlib import md5
 
 from flask import request, jsonify
-from flask_login import logout_user, login_required, current_user, login_user
+from flask_login import logout_user, login_required, login_user
 
 from server import app, db
-from server.tables import Patient, Doctor, Record, Admin
+from server.tables import Doctor, Admin, Staff
 
 
 @app.route("/admin/login", methods=['POST'])
@@ -59,7 +59,7 @@ def admin_add_doctor():
 def admin_add_schedule():
     try:
         doctor_id = int(request.form['doctor_id'])
-        weekday = request.form['weekday']
+        weekday = int(request.form['weekday'])
         start = datetime.datetime.strptime(request.form['start'], '%H:%M').time()
         end = datetime.datetime.strptime(request.form['end'], '%H:%M').time()
         capacity = int(request.form['capacity'])
@@ -72,7 +72,24 @@ def admin_add_schedule():
             return jsonify(success=False,
                            error_message='No such doctor')
         doctor.add_schedule(weekday=weekday, start=start, end=end, capacity=capacity)
+    except Exception as e:
+        return jsonify(success=False,
+                       error_message=str(e))
+    return jsonify(success=True)
+
+
+@app.route("/admin/addNewStaff", methods=['POST'])
+@login_required
+def admin_add_staff():
+    try:
+        name = request.form['name']
+        password = md5(request.form['password'].encode()).hexdigest()
+        role = request.form['position']
     except:
         return jsonify(success=False,
-                       error_message='Internal error')
-    return jsonify(success=True)
+                       error_message='Invalid input')
+    staff = Staff(name=name, password=password, role=role)
+    db.session.add(staff)
+    db.session.commit()
+    return jsonify(success=True,
+                   doctor_id=staff.staff_id)
