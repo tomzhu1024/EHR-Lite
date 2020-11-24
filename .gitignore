@@ -1,6 +1,5 @@
 .idea
 .DS_Store
-.ipynb_checkpoints
 node_modules
 build
 __pycache__
