@@ -1,0 +1,16 @@
+.title {
+    float: left;
+    color: rgba(0, 0, 0, 0.01);
+    width: 90px;
+    margin-left: 20px;
+    margin-right: 60px;
+}
+
+.text-area {
+    float: left;
+    margin-right: 20px;
+}
+
+.clear-fix {
+    clear: both;
+}

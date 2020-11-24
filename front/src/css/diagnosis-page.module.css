@@ -1,0 +1,31 @@
+.patient-info-container {
+    width: 900px;
+    padding: 25px 25px 0px 25px;
+}
+
+.title-wrapper {
+
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.diagnosis-page-container {
+  width: 900px;
+  height: 500px;
+  padding: 25px;
+}
+
+.textbox {
+  margin-bottom: 40px;
+}
+
+.submit-button {
+  float: right;
+  margin-right: 80px;
+}
+
+.clear-fix {
+    clear: both;
+}
