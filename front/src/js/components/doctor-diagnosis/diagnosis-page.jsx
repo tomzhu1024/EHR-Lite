@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../css/diagnosis-page.module.css";
+import style from "../../../css/diagnosis-page.module.css";
 import { Button, Table } from "antd";
 import DoctorText from "./doctor-text";
 

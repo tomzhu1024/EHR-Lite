@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Divider } from "antd";
-import style from "../../css/department-list.module.css";
+import style from "../../../css/department-list.module.css";
 
 function onClickDepartment(item){
   let key = parseInt(item.key);

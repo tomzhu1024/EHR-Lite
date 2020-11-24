@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../css/doctor-text.module.css";
+import style from "../../../css/doctor-text.module.css";
 import { Input } from "antd";
 
 const { TextArea } = Input;

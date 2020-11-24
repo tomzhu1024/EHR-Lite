@@ -2,7 +2,7 @@ import React from "react";
 import { Calendar, Divider, Empty, Menu } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import "antd/dist/result.css";
-import style from "../../css/calendar-form.module.css";
+import style from "../../../css/calendar-form.module.css";
 
 const { SubMenu } = Menu;
 const data = [
