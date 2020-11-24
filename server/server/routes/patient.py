@@ -26,7 +26,7 @@ def patient_login():
                            error_message='Wrong password')
         else:
             login_user(patient)
-            session['patient_id'] = patient.patient_id
+            current_user.patient_id = patient.patient_id
             return jsonify(success=True)
 
 
@@ -34,6 +34,8 @@ def patient_login():
 @login_required
 def patient_logout():
     logout_user()
+    session.clear()
+
     return jsonify(success=True)
 
 
@@ -43,8 +45,7 @@ def patient_register():
         patient_id = int(request.form['id'])
         password = request.form['password']
         password = md5(password.encode()).hexdigest()
-        birthday = request.form['birthday']
-        birthday = datetime.date.strptime(birthday, '%Y-%m-%d')
+        birthday = datetime.datetime.strptime(request.form['birthday'], '%Y-%m-%d').date()
         name = request.form['name']
     except:
         return jsonify(success=False,
@@ -61,12 +62,12 @@ def patient_register():
         try:
             db.session.add(new_p)
             db.session.commit()
-        except:
+        except Exception as e:
+            print(e)
             return jsonify(success=False,
                            error_message='Unable to add in database')
 
-        return jsonify(success=True,
-                       error_message=None)
+        return jsonify(success=True)
 
 
 @login_required
@@ -109,10 +110,11 @@ def patient_make_reservation():
         return jsonify(success=False,
                        error_message='Invalid input')
     try:
-        patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+        patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
         record = patient.new_record()
         patient.new_appointment(record_id=record.record_id, schedule_id=schedule_id, schedule_date=schedule_date)
-    except:
+    except Exception as e:
+        print(e)
         return jsonify(success=False,
                        error_message='server error')
     return jsonify(success=True)
@@ -121,9 +123,9 @@ def patient_make_reservation():
 @app.route("/patient/getRecord", methods=['GET'])
 @login_required
 def patient_get_record():
-    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
     records = patient.records
-    data = [{'record_id': record.record_id, 'date': record.date, 'stage': record.stage} for record in records]
+    data = [{'record_id': record.record_id, 'date': str(record.date), 'stage': record.stage} for record in records]
     return jsonify(success=True,
                    data=data)
 
@@ -137,7 +139,7 @@ def patient_get_appointment():
         return jsonify(success=False,
                        error_message='Invalid input')
     record = Record.query.filter_by(record_id=record_id).first()
-    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
     if not record:
         return jsonify(success=False,
                        error_message="Can't find such record")
@@ -154,7 +156,7 @@ def patient_get_appointment():
 @app.route("/patient/checkQueue", methods=['GET'])
 @login_required
 def patient_get_position():
-    patient = Patient.query.filter_by(patient_id=session['patient_id']).first()
+    patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
     appoint = patient.current_appointment()
     if not appoint or appoint.stage != 'In Queue':
         return jsonify(success=False,

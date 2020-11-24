@@ -2,7 +2,8 @@ import datetime
 from hashlib import md5
 
 from flask import request, jsonify
-from flask_login import logout_user, login_required, login_user
+from flask_login import logout_user, login_required, login_user, current_user
+
 
 from server import app, db
 from server.tables import Doctor, Admin, Staff
@@ -92,4 +93,4 @@ def admin_add_staff():
     db.session.add(staff)
     db.session.commit()
     return jsonify(success=True,
-                   doctor_id=staff.staff_id)
+                   staff_id=staff.staff_id)

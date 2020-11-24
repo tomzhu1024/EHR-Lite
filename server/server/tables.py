@@ -20,9 +20,9 @@ class Patient(db.Model, UserMixin):
         return 'Patient' + str(self.patient_id)
 
     def new_record(self):
-        in_progress_records = Record.query.filter_by(stage='In Progress').first()
-        if in_progress_records:
-            raise Exception("Can't new an record when another record is not over")
+        for r in self.records:
+            if r.stage == "In Progress":
+                raise Exception("Can't new an record when another record is not over")
         new_r = Record(patient_id=self.patient_id, stage='In Progress')
         db.session.add(new_r)
         db.session.commit()
@@ -46,13 +46,15 @@ class Patient(db.Model, UserMixin):
         for appoint in record.appointments:
             if appoint.stage in ['Upcoming', 'In Queue', 'In Progress']:
                 return appoint
+        return None
 
     def current_record(self):
         record = Record.query.filter_by(stage='In Progress', patient_id=self.patient_id).first()
         return record
 
     def position(self, appointment):
-        queue = Appointment.query.filter_by(schedule_id=appointment.schedule_id, schedule_date=appointment.schedule_date,
+        queue = Appointment.query.filter_by(schedule_id=appointment.schedule_id,
+                                            schedule_date=appointment.schedule_date,
                                             stage='In Queue').order_by(Appointment.check_in_time.asc()).all()
         i = queue.index(appointment)
         return i
@@ -66,8 +68,7 @@ class Doctor(db.Model, UserMixin):
     department = db.Column(db.Date, nullable=False)
     title = db.Column(db.Date, nullable=False)
     schedules = db.relationship('Schedule', backref='doctor')
-    schedules = db.relationship('Appointment', backref='doctor')
-
+    appointments = db.relationship('Appointment', backref='doctor')
 
     def __repr__(self):
         return self.name
@@ -90,13 +91,37 @@ class Doctor(db.Model, UserMixin):
     def add_schedule(self, weekday, start, end, capacity):
         schedules = self.schedules
         for sched in schedules:
-            if sched.weekday != weekday and \
-                    (sched.start_time > end or sched.end_time < start or sched.start_time == start and sched.end_time == end):
+            if sched.weekday == weekday and max(sched.start_time, start) <= min(sched.end_time, end):
                 raise Exception('Incompatible time')
         new_sched = Schedule(doctor_id=self.doctor_id, weekday=weekday,
                              start_time=start, end_time=end, capacity=capacity)
         db.session.add(new_sched)
         db.session.commit()
+
+    def current_schedule(self):
+        for sched in self.schedules:
+            if sched.weekday == datetime.date.today().weekday() and \
+                    sched.start_time < datetime.time.now().time() < sched.end_time:
+                return sched
+
+    def get_queue(self):
+        def take_checkin(appoint):
+            return appoint.check_in_time
+
+        queue = []
+        for appoint in self.appointments:
+            if appoint.stage == 'In Queue' and appoint.schedule_date == datetime.date.today() and \
+                    appoint.schedule.start_time < datetime.datetime.now().time() < appoint.schedule.end_time:
+                queue.append(appoint)
+        queue.sort(key=take_checkin)
+        return queue
+
+    def get_next_patient(self):
+        queue = self.get_queue()
+        if not queue:
+            return None
+        else:
+            return queue[0]
 
 
 class Schedule(db.Model):
@@ -137,7 +162,6 @@ class Record(db.Model):
     stage = db.Column(db.String(20), nullable=False)
     appointments = db.relationship('Appointment', backref='record')
 
-
     def __repr__(self):
         return f"<Record %{self.record_id} {self.patient_id} {self.date}>"
 
@@ -155,6 +179,7 @@ class Appointment(db.Model):
     stage = db.Column(db.String(20), nullable=False)
 
 
+
 class Admin(db.Model, UserMixin):
     __tablename__ = 'admin'
     admin_id = db.Column(db.Integer, primary_key=True)
@@ -163,3 +188,14 @@ class Admin(db.Model, UserMixin):
 
     def get_id(self):
         return 'Admin' + str(self.admin_id)
+
+
+class Staff(db.Model, UserMixin):
+    __tablename__ = 'staff'
+    staff_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), unique=True)
+    password = db.Column(db.String(30))
+    role = db.Column(db.String(20))
+
+    def get_id(self):
+        return 'Staff' + str(self.staff_id)

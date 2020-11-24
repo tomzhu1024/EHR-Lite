@@ -56,9 +56,16 @@ CREATE TABLE `appointment`(
 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `staff`(
+    `staff_id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR (10) NOT NULL,
+	`password` VARCHAR(50) NOT NULL,
+	`role` VARCHAR(20) NOT NULL,
+	PRIMARY KEY(`staff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `admin`(
-    `admin_id` INT NOT NULL,
+    `admin_id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR (10) NOT NULL,
 	`password` VARCHAR(50) NOT NULL,
 	PRIMARY KEY(`admin_id`)

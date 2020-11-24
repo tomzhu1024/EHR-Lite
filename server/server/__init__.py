@@ -1,5 +1,5 @@
 import pymysql
-from flask import Flask, session
+from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
@@ -18,13 +18,12 @@ conn = pymysql.connect(host='dev.tomzhu.site',
 db = SQLAlchemy(app)
 loginManager = LoginManager()
 loginManager.init_app(app)
-# Swagger(app)
 
 from server.routes.patient import *
 from server.routes.doctor import *
 from server.routes.staff import *
 from server.routes.admin import *
-from server.tables import Patient, Doctor, Admin
+from server.tables import Patient, Doctor, Admin, Staff
 
 
 @loginManager.user_loader
@@ -38,5 +37,8 @@ def load_user(user_id):
     elif user_id.startswith('Admin'):
         user_id = user_id.lstrip('Admin')
         return Admin.query.get(int(user_id))
+    elif user_id.startswith('Staff'):
+        user_id = user_id.lstrip('Staff')
+        return Staff.query.get(int(user_id))
     else:
         raise Exception
