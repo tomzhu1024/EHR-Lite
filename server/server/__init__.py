@@ -2,8 +2,10 @@ import pymysql
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://test:se-dev-8899@dev.tomzhu.site:3306/EHR_Lite"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'JuanWang'
