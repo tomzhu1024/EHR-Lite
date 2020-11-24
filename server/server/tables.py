@@ -147,7 +147,7 @@ class Schedule(db.Model):
             raise ValueError("Not a valid date")
         availables = self.capacity
         for i in self.schedules:
-            if i.schedule_date == date and i.stage != -1:
+            if i.schedule_date == date and i.stage != 'Canceled':
                 availables -= 1
             if availables <= 0:
                 return False

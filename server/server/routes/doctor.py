@@ -112,7 +112,7 @@ def doctor_check_patient_record():
 
 @app.route("/doctor/getRecordDetail", methods=['POST'])
 @login_required
-def doctor_check_patient_record():
+def doctor_get_record_detail():
     try:
         record_id = request.form.get('record_id')
     except:
