@@ -21,6 +21,7 @@ db = SQLAlchemy(app)
 loginManager = LoginManager()
 loginManager.init_app(app)
 
+from server.routes.general import *
 from server.routes.patient import *
 from server.routes.doctor import *
 from server.routes.staff import *
