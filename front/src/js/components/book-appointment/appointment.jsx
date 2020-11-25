@@ -1,7 +1,7 @@
 import React from 'react';
 import DepartmentList from "./department-list";
 import CalendarForm from "./calendar-form";
-import style from "../../css/appointment.module.css"
+import style from "../../../css/appointment.module.css"
 
 function Appointment(props) {
   return (

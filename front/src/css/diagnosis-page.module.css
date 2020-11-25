@@ -1,7 +1,14 @@
+.main-container {
+  width: 900px;
+  height: 800px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
 .patient-info-container {
     width: 900px;
     padding: 25px 25px 0px 25px;
 }
+
 
 .title-wrapper {
 
