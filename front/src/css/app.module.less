@@ -1,3 +1,52 @@
+/* squada-one-regular - latin */
+@font-face {
+  font-family: 'Squada One';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+  url('../assets/squada-one-v9-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/squada-one-v9-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* ubuntu-regular - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+  url('../assets/ubuntu-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/ubuntu-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* ubuntu-italic - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 400;
+  src: local(''),
+  url('../assets/ubuntu-v15-latin-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/ubuntu-v15-latin-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* ubuntu-700 - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+  url('../assets/ubuntu-v15-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/ubuntu-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* ubuntu-700italic - latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: italic;
+  font-weight: 700;
+  src: local(''),
+  url('../assets/ubuntu-v15-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../assets/ubuntu-v15-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:global * {
+  font-family: "Ubuntu", sans-serif;
+}
+
 :global .ScrollbarsCustom-Wrapper {
   right: 3px !important;
 
@@ -10,4 +59,106 @@
   width: 3px !important;
   top: 2px !important;
   height: calc(100% - 4px) !important;
+}
+
+.navBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    background: #ffffff;
+    width: 75px;
+  }
+
+  :global .ant-menu {
+    text-align: right;
+    float: right;
+
+    .ant-menu-item {
+      margin: 0;
+    }
+  }
+}
+
+.centered {
+  text-align: center;
+}
+
+.fixedLayout {
+  background-color: blue;
+
+  :global .ant-layout-header {
+    height: 64px;
+  }
+
+  :global .ant-layout-footer {
+    height: 64px;
+    padding: 0;
+    line-height: 64px;
+    color: #00000065;
+  }
+
+  :global .ant-layout {
+    height: calc(100vh - 128px);
+    background-color: #ffffff;
+
+    .ant-layout-sider {
+      background-color: #ffffff;
+    }
+
+    .ant-layout-content {
+      padding: 20px;
+    }
+  }
+}
+
+.gradient {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 37%, rgba(148, 187, 233, 1) 100%);
+}
+
+.loginBox {
+  width: 100vw;
+  max-width: 500px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 0 15px;
+  left: 50%;
+  top: 50%;
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-family: "Squada One", sans-serif;
+  }
+}
+
+.registerBox {
+  margin: auto;
+  width: 100vw;
+  max-width: 500px;
+  padding: 45px 15px;
+
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-family: "Squada One", sans-serif;
+  }
+}
+
+
+.rightAligned {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
