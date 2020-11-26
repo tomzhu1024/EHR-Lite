@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {RouteComponentProps} from "react-router-dom";
-import Style from "../css/patient-home-page.module.less";
+import Style from "../css/patient-home.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
 import {Breadcrumb, Layout, Menu} from "antd";
 import {LaptopOutlined, LogoutOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
@@ -9,6 +9,7 @@ import {SERVER_ADDR} from "./misc/const";
 import $ from "jquery";
 import {observable} from "mobx";
 import {History} from "history";
+import {Scrollbar} from "react-scrollbars-custom";
 
 const {SubMenu} = Menu;
 const {Header, Footer, Sider, Content} = Layout;
@@ -111,17 +112,19 @@ class SideMenu extends React.Component<{}, {}> {
 class PatientHomePage extends React.Component<RouteComponentProps, {}> {
     render() {
         return (
-            <Layout>
+            <Layout className={Style.fixedLayout}>
                 <Header>
                     <Navbar history={this.props.history}/>
                 </Header>
                 <Layout>
-                    <Sider>
-                        <SideMenu/>
+                    <Sider collapsedWidth={0} breakpoint={"lg"}>
+                        <Scrollbar noScrollX={true}>
+                            <SideMenu/>
+                        </Scrollbar>
                     </Sider>
                     <Content>
                         <Breadcrumb/>
-
+                        {/* TODO: primary components */}
                     </Content>
                 </Layout>
                 <Footer>

@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import {Helmet} from "react-helmet";
 
 import "antd/dist/antd.less";
+import "../css/app.module.less";
 import FavIcon from "../assets/favicon.png";
 import {observer} from "mobx-react";
 import {HashRouter, Route} from "react-router-dom";
 import {PatientLoginPage} from "./patient-login-page";
 import {PatientHomePage} from "./patient-home-page";
+import {PatientRegisterPage} from "./patient-register-page";
 
 
 @observer
@@ -22,6 +24,7 @@ class App extends React.Component<{}, {}> {
                 </Helmet>
                 <HashRouter>
                     <Route path="/patient/login" component={PatientLoginPage}/>
+                    <Route path="/patient/register" component={PatientRegisterPage}/>
                     <Route path="/patient/home" component={PatientHomePage}/>
                 </HashRouter>
             </div>

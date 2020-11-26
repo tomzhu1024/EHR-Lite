@@ -2,15 +2,15 @@ import {observer} from "mobx-react";
 import React from "react";
 import $ from "jquery";
 import {SERVER_ADDR} from "./misc/const";
-import Style from "../css/patient-login-page.module.less";
+import Style from "../css/patient-form.module.less";
 import {Alert, Button, Card, Form, Input, Space, Spin} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {RouteComponentProps} from "react-router-dom";
 import {observable} from "mobx";
+import {FormInstance} from 'antd/lib/form';
+import {hash} from "./misc/util";
 
 interface PatientLoginPageState {
-    id: string,
-    password: string,
     hasError: boolean,
     errMsg: string,
     spinning: boolean
@@ -18,9 +18,8 @@ interface PatientLoginPageState {
 
 @observer
 class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
+    formRef = React.createRef<FormInstance>();
     myState: PatientLoginPageState = observable({
-        id: '',
-        password: '',
         hasError: false,
         errMsg: '',
         spinning: false
@@ -42,7 +41,9 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
         });
     }
 
-    onFinish = () => {
+    onFinish = (fieldsValue: any) => {
+        console.log(fieldsValue.id!);
+        console.log(hash(fieldsValue.password!));
         this.myState.spinning = true;
         $.ajax({
             type: "POST",
@@ -53,13 +54,12 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
             },
             dataType: "json",
             data: {
-                id: this.myState.id,
-                password: this.myState.password
+                id: fieldsValue.id!,
+                password: hash(fieldsValue.password!)
             },
             success: (data: any) => {
+                this.formRef.current.resetFields();
                 this.myState.spinning = false;
-                this.myState.id = '';
-                this.myState.password = '';
                 if (!data.success!) {
                     this.myState.hasError = true;
                     this.myState.errMsg = "Login Failed: " + data.error_message!;
@@ -69,8 +69,6 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
             },
             error: () => {
                 this.myState.spinning = false;
-                this.myState.id = '';
-                this.myState.password = '';
                 this.myState.hasError = true;
                 this.myState.errMsg = "Login Failed: Server error";
             }
@@ -84,8 +82,12 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
                 <div className={Style.box}>
                     <Spin spinning={this.myState.spinning}>
                         <Card>
-                            <h1>Log into EHR-Lite</h1>
-                            <Form onFinish={this.onFinish}>
+                            <h1>Patient Login</h1>
+                            <Form
+                                onFinish={this.onFinish}
+                                ref={this.formRef}
+                                layout="vertical"
+                            >
                                 <Form.Item
                                     name="id"
                                     rules={[
@@ -98,10 +100,6 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
                                     <Input
                                         prefix={<UserOutlined className="site-form-item-icon"/>}
                                         placeholder="ID"
-                                        value={this.myState.id}
-                                        onChange={event => {
-                                            this.myState.id = event.target.value;
-                                        }}
                                     />
                                 </Form.Item>
                                 <Form.Item
@@ -117,15 +115,13 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
                                         prefix={<LockOutlined className="site-form-item-icon"/>}
                                         type="password"
                                         placeholder="Password"
-                                        value={this.myState.password}
-                                        onChange={event => {
-                                            this.myState.password = event.target.value;
-                                        }}
                                     />
                                 </Form.Item>
                                 <Form.Item className={Style.rightAligned}>
                                     <Space>
-                                        <Button>
+                                        <Button onClick={() => {
+                                            this.props.history.push("/patient/register");
+                                        }}>
                                             Register
                                         </Button>
                                         <Button type="primary" htmlType="submit">
