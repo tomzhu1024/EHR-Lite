@@ -1,7 +1,7 @@
 import React from "react";
 import {observer} from "mobx-react";
 import {RouteComponentProps} from "react-router-dom";
-import Style from "../css/patient-home.module.less";
+import Style from "../css/patient-main.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
 import {Breadcrumb, Layout, Menu} from "antd";
 import {LaptopOutlined, LogoutOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
