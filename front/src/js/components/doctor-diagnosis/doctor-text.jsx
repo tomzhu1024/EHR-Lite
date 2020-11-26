@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../../css/doctor-text.module.css";
+import style from "../../css/doctor-text.module.css";
 import { Input } from "antd";
 
 const { TextArea } = Input;
@@ -7,6 +7,7 @@ const { TextArea } = Input;
 function DoctorText(props) {
   return (
 		<>
+      <div className={style["tri"]}></div>
       <div className={style["title"]}>
         <h3>{props.title}</h3>
       </div>

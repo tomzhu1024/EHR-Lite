@@ -1,9 +1,9 @@
 .title {
     float: left;
     color: rgba(0, 0, 0, 0.01);
-    width: 90px;
-    margin-left: 20px;
-    margin-right: 60px;
+    width: 120px;
+    margin-left: 10px;
+    margin-right: 20px;
 }
 
 .text-area {
@@ -13,4 +13,16 @@
 
 .clear-fix {
     clear: both;
+}
+
+.tri{
+    margin-left: 30px;
+    margin-top: 8px;
+    float: left;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent  transparent transparent black;
+    padding: 0px; 
+    width: 0px;
+    height: 0px;
 }
