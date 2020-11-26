@@ -13,7 +13,8 @@ module.exports = merge(baseCfg, {
         hot: true,
         quiet: true,
         stats: false,
-        writeToDisk: true
+        writeToDisk: true,
+        clientLogLevel: 'silent'
     },
     plugins: [
         new HotModuleReplacementPlugin()
