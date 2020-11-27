@@ -74,8 +74,9 @@ def patient_register():
 @app.route('/patient/getDepartmentList', methods=['GET'])
 def patient_get_department_list():
     departs = Doctor.query.with_entities(Doctor.department).distinct().all()
+    data = [i[0] for i in departs]
     return jsonify(success=True,
-                   data=departs)
+                   data=data)
 
 
 @login_required
