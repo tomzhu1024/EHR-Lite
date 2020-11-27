@@ -167,4 +167,14 @@ def patient_get_position():
                        data=position)
 
 
+@app.route("/patient/checkStage", methods=['GET'])
+@login_required
+def patient_get_stage():
+    appoint = current_user.current_appointment()
+    if not appoint:
+        return jsonify(success=False,
+                       error_message="No Appointments going on")
+    else:
+        return jsonify(success=True,
+                       stage=appoint.stage)
 
