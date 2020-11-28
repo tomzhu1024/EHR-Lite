@@ -3,15 +3,14 @@ import ReactDOM from "react-dom";
 import {Helmet} from "react-helmet";
 import {HashRouter, Route, Switch} from "react-router-dom";
 import {observer} from "mobx-react";
-import "antd/dist/antd.less";
 
+import "../css/patient-app.less";
+import FavIcon from "../assets/favicon.png";
 import {PatientLogin, PatientRegister} from "./patient-auth";
 import {PatientSkeleton} from "./patient-skeleton";
-import "../css/app.less";
-import FavIcon from "../assets/favicon.png";
 
 @observer
-class App extends React.Component<{}, {}> {
+class PatientApp extends React.Component<{}, {}> {
     render() {
         return (
             <div className="app">
@@ -22,9 +21,9 @@ class App extends React.Component<{}, {}> {
                 </Helmet>
                 <HashRouter>
                     <Switch>
-                        <Route path="/patient/login" exact component={PatientLogin}/>
-                        <Route path="/patient/register" exact component={PatientRegister}/>
-                        <Route path="/patient" component={PatientSkeleton}/>
+                        <Route path="/login" component={PatientLogin}/>
+                        <Route path="/register" component={PatientRegister}/>
+                        <Route component={PatientSkeleton}/>
                     </Switch>
                 </HashRouter>
             </div>
@@ -32,4 +31,4 @@ class App extends React.Component<{}, {}> {
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+ReactDOM.render(<PatientApp/>, document.getElementById("root"));

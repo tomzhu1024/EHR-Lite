@@ -9,7 +9,7 @@ const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        app: resolve(PROJECT_ROOT, 'src/js/app.tsx')
+        patient: resolve(PROJECT_ROOT, 'src/js/patient-app.tsx')
     },
     output: {
         path: resolve(PROJECT_ROOT, 'build'),
@@ -75,10 +75,6 @@ module.exports = {
                         loader: 'less-loader',
                         options: {
                             lessOptions: {
-                                modifyVars: {
-                                    'primary-color': '#09d0db',
-                                    'link-color': '#09d0db',
-                                },
                                 javascriptEnabled: true
                             }
                         }
@@ -97,8 +93,8 @@ module.exports = {
         new FriendlyErrorsPlugin(),
         new HtmlWebpackPlugin({
             template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
-            filename: 'index.html',
-            chunks: ['app'],
+            filename: 'patient.html',
+            chunks: ['patient'],
             minify: {
                 collapseWhitespace: true
             }

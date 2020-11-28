@@ -1,19 +1,20 @@
-import {observer} from "mobx-react";
 import React from "react";
-import {History} from "history";
+import {observer} from "mobx-react";
 import {IObservableObject, observable} from "mobx";
-import $ from "jquery";
-import {Layout, Menu, notification} from "antd";
-import {LaptopOutlined, LogoutOutlined, NotificationOutlined, UserOutlined, PlusOutlined, CalendarOutlined} from "@ant-design/icons";
 import {Route, RouteComponentProps} from "react-router-dom";
+import {History} from "history";
+import {Layout, Menu, notification} from "antd";
+import {HistoryOutlined, HomeOutlined, LogoutOutlined, ScheduleOutlined, UserOutlined} from "@ant-design/icons";
 import {Scrollbar} from "react-scrollbars-custom";
+import $ from "jquery";
 
 import {SERVER_ADDR} from "./misc/const";
 import Style from "../css/patient-skeleton.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
 import {PatientMakeReservation} from "./patient-make-reservation";
-import {PatientCheckReservation} from "./patient-check-reservation";
-import {Test} from "./test";
+import {PatientCheckQueue} from "./patient-check-queue";
+import {PatientCheckHistory} from "./patient-check-history";
+import {PatientHome} from "./patient-home";
 
 const {SubMenu} = Menu;
 const {Header, Footer, Sider, Content} = Layout;
@@ -36,7 +37,7 @@ class Navbar extends React.Component<{ history: History }, {}> {
                 if (data.is_login!) {
                     this.myState.displayName = data.name!;
                 } else {
-                    this.props.history.push("/patient/login");
+                    this.props.history.push("/login");
                 }
             },
             error: () => {
@@ -71,7 +72,7 @@ class Navbar extends React.Component<{ history: History }, {}> {
                                     withCredentials: true
                                 },
                                 success: () => {
-                                    this.props.history.push("/patient/login");
+                                    this.props.history.push("/login");
                                 }
                             });
                         }}>
@@ -93,33 +94,71 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                 <Menu
                     mode="inline"
                     selectedKeys={[]}
+                    defaultOpenKeys={["2", "3"]}
                     style={{borderRight: '5px'}}
                 >
-                    <SubMenu key="sub1" icon={<CalendarOutlined/>} title="My Reservation">
+                    <Menu.Item
+                        key="1"
+                        icon={<HomeOutlined/>}
+                        onClick={() => {
+                            this.props.history.push("/");
+                        }}
+                    >
+                        Home
+                    </Menu.Item>
+                    <SubMenu key="2" icon={<ScheduleOutlined/>} title="My Reservation">
                         <Menu.Item
-                            key="1"
-                            icon={<PlusOutlined/>}
+                            key="2sub1"
                             onClick={() => {
-                                this.props.history.push("/patient/makeReservation");
+                                this.props.history.push("/makeReservation");
                             }}
                         >
-                            Add New
+                            New Reservation
                         </Menu.Item>
-                        <Menu.Item key="2">option2</Menu.Item>
-                        <Menu.Item key="3">option3</Menu.Item>
-                        <Menu.Item key="4">option4</Menu.Item>
+                        <Menu.Item
+                            key="2sub2"
+                            onClick={() => {
+                                this.props.history.push("/checkQueue");
+                            }}
+                        >
+                            Queue Status
+                        </Menu.Item>
                     </SubMenu>
-                    <SubMenu key="sub2" icon={<LaptopOutlined/>} title="subnav 2">
-                        <Menu.Item key="5">option5</Menu.Item>
-                        <Menu.Item key="6">option6</Menu.Item>
-                        <Menu.Item key="7">option7</Menu.Item>
-                        <Menu.Item key="8">option8</Menu.Item>
+                    <SubMenu key="3" icon={<HistoryOutlined/>} title="My History">
+                        <Menu.Item
+                            key="3sub1"
+                            onClick={() => {
+                                this.props.history.push("/checkHistory");
+                            }}
+                        >
+                            All Records
+                        </Menu.Item>
                     </SubMenu>
-                    <SubMenu key="sub3" icon={<NotificationOutlined/>} title="subnav 3">
-                        <Menu.Item key="9">option9</Menu.Item>
-                        <Menu.Item key="10">option10</Menu.Item>
-                        <Menu.Item key="11">option11</Menu.Item>
-                        <Menu.Item key="12">option12</Menu.Item>
+                    <SubMenu key="4" icon={<UserOutlined/>} title="My Account">
+                        <Menu.Item
+                            key="4sub1"
+                            disabled
+                        >
+                            Change Password
+                        </Menu.Item>
+                        <Menu.Item
+                            key="4sub2"
+                            onClick={() => {
+                                $.ajax({
+                                    type: "GET",
+                                    url: SERVER_ADDR + "/patient/logout",
+                                    crossDomain: true,
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    success: () => {
+                                        this.props.history.push("/login");
+                                    }
+                                });
+                            }}
+                        >
+                            Logout
+                        </Menu.Item>
                     </SubMenu>
                 </Menu>
             </>
@@ -144,15 +183,16 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
                     <Content>
                         <Scrollbar noScrollX={true}>
                             <div style={{padding: "25px"}}>
-                                <Route path="/patient/makeReservation" component={PatientMakeReservation}/>
-                                <Route path="/patient/checkReservation" component={PatientCheckReservation}/>
-                                <Route path="/patient/test" component={Test}/>
+                                <Route path="/" exact component={PatientHome}/>
+                                <Route path="/makeReservation" component={PatientMakeReservation}/>
+                                <Route path="/checkQueue" component={PatientCheckQueue}/>
+                                <Route path="/checkHistory" component={PatientCheckHistory}/>
                             </div>
                         </Scrollbar>
                     </Content>
                 </Layout>
                 <Footer>
-                    <div style={{textAlign: "center"}}>Patient Side - EHR Lite © 2020</div>
+                    <div style={{textAlign: "center"}}>Patient-side Client - EHR Lite © 2020</div>
                 </Footer>
             </Layout>
         );

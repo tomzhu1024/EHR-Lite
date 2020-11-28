@@ -9,7 +9,7 @@ import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import $ from "jquery";
 import {SERVER_ADDR} from "./misc/const";
 import {hash} from "./misc/util";
-import style from "../css/patient-auth.module.less";
+import Style from "../css/patient-auth.module.less";
 
 const formState: {
     hasError: boolean;
@@ -38,7 +38,7 @@ class PatientLogin extends React.Component<RouteComponentProps, {}> {
             },
             success: data => {
                 if (data.is_login!) {
-                    this.props.history.push("/patient");
+                    this.props.history.push("/");
                 }
             }
         });
@@ -65,7 +65,7 @@ class PatientLogin extends React.Component<RouteComponentProps, {}> {
                     formState.hasError = true;
                     formState.message = "Login Failed: " + data.error_message!;
                 } else {
-                    this.props.history.push('/patient');
+                    this.props.history.push('/');
                 }
             },
             error: () => {
@@ -82,11 +82,11 @@ class PatientLogin extends React.Component<RouteComponentProps, {}> {
                 <Helmet>
                     <title>Patient Login - EHR Lite</title>
                 </Helmet>
-                <div className={style.gradient}/>
-                <div className={style.loginBox}>
+                <div className={Style.gradient}/>
+                <div className={Style.loginBox}>
                     <Spin spinning={formState.spinning}>
                         <Card>
-                            <h1 className={style.title}>Patient Login</h1>
+                            <h1 className={Style.title}>Patient Login</h1>
                             <Form
                                 onFinish={this.onFinish}
                                 ref={this.formRef}
@@ -121,10 +121,10 @@ class PatientLogin extends React.Component<RouteComponentProps, {}> {
                                         placeholder="Password"
                                     />
                                 </Form.Item>
-                                <Form.Item className={style.rightAligned}>
+                                <Form.Item className={Style.rightAligned}>
                                     <Space>
                                         <Button onClick={() => {
-                                            this.props.history.push("/patient/register");
+                                            this.props.history.push("/register");
                                         }}>
                                             Register
                                         </Button>
@@ -183,7 +183,7 @@ class PatientRegister extends React.Component<RouteComponentProps, {}> {
             },
             success: data => {
                 if (data.is_login!) {
-                    this.props.history.push("/patient");
+                    this.props.history.push("/");
                 }
             }
         });
@@ -214,7 +214,7 @@ class PatientRegister extends React.Component<RouteComponentProps, {}> {
                 } else {
                     formState.hasSuccess = true;
                     formState.message = "Registered Successfully!";
-                    this.props.history.push('/patient/login');
+                    this.props.history.push('/login');
                 }
             },
             error: () => {
@@ -231,11 +231,11 @@ class PatientRegister extends React.Component<RouteComponentProps, {}> {
                 <Helmet>
                     <title>Patient Register - EHR Lite</title>
                 </Helmet>
-                <div className={style.gradient}/>
-                <div className={style.registerBox}>
+                <div className={Style.gradient}/>
+                <div className={Style.registerBox}>
                     <Spin spinning={formState.spinning}>
                         <Card>
-                            <h1 className={style.title}>Patient Registration</h1>
+                            <h1 className={Style.title}>Patient Registration</h1>
                             <Form
                                 onFinish={this.onFinish}
                                 ref={this.formRef}
@@ -309,13 +309,13 @@ class PatientRegister extends React.Component<RouteComponentProps, {}> {
                                             message: 'Please input your birthday!'
                                         }
                                     ]}
-                                    className={style.formItem}
+                                    className={Style.formItem}
                                 >
                                     <DatePicker/>
                                 </Form.Item>
-                                <Form.Item className={style.rightAligned}>
+                                <Form.Item className={Style.rightAligned}>
                                     <Space>
-                                        <Link to="/patient/login">Already have an account?</Link>
+                                        <Link to="/login">Already have an account?</Link>
                                         <Button type="primary" htmlType="submit">
                                             Register
                                         </Button>
