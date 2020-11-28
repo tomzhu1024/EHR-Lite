@@ -5,7 +5,7 @@ import {HashRouter, Route, Switch} from "react-router-dom";
 import {observer} from "mobx-react";
 import "antd/dist/antd.less";
 
-import {PatientLoginPage, PatientRegisterPage} from "./patient-auth";
+import {PatientLogin, PatientRegister} from "./patient-auth";
 import {PatientSkeleton} from "./patient-skeleton";
 import "../css/app.less";
 import FavIcon from "../assets/favicon.png";
@@ -22,8 +22,8 @@ class App extends React.Component<{}, {}> {
                 </Helmet>
                 <HashRouter>
                     <Switch>
-                        <Route path="/patient/login" exact component={PatientLoginPage}/>
-                        <Route path="/patient/register" exact component={PatientRegisterPage}/>
+                        <Route path="/patient/login" exact component={PatientLogin}/>
+                        <Route path="/patient/register" exact component={PatientRegister}/>
                         <Route path="/patient" component={PatientSkeleton}/>
                     </Switch>
                 </HashRouter>

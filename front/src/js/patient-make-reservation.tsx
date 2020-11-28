@@ -1,15 +1,14 @@
 import React from "react";
 import {RouteComponentProps} from "react-router-dom";
+import {Helmet} from "react-helmet";
 import {Alert, Breadcrumb, Button, Card, DatePicker, Form, notification, Select, Space, Spin, Table} from "antd";
-import {ColumnsType} from "antd/es/table";
-import {HomeOutlined, UserOutlined} from "@ant-design/icons";
+import {HomeOutlined, CalendarOutlined, PlusOutlined} from "@ant-design/icons";
 import {IObservableArray, IObservableObject, observable, toJS} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
-import {v4 as uuid} from "uuid";
 
 import {SERVER_ADDR} from "./misc/const";
-import Style from "../css/patient-app.module.less";
+import Style from "../css/patient-app-shared.module.less";
 
 interface TimeSlot {
     key: number;
@@ -118,15 +117,21 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
     render() {
         return (
             <>
+                <Helmet>
+                    <title>Make Reservation - EHR Lite</title>
+                </Helmet>
                 <Breadcrumb className={Style.breadcrumb}>
                     <Breadcrumb.Item>
                         <HomeOutlined/>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <UserOutlined/>
-                        <span>Patient</span>
+                        <CalendarOutlined/>
+                        <span>My Reservation</span>
                     </Breadcrumb.Item>
-                    <Breadcrumb.Item>New Appointment</Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <PlusOutlined/>
+                        <span>Add New</span>
+                    </Breadcrumb.Item>
                 </Breadcrumb>
                 <Space direction="vertical" style={{width: "100%"}}>
                     <Card>
@@ -134,13 +139,13 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                             <Form.Item
                                 label="Department"
                                 name="department"
-                                className={Style.formItem}
                                 rules={[
                                     {
                                         required: true,
                                         message: "Please choose a department!"
                                     }
                                 ]}
+                                className={Style.form}
                             >
                                 <Select>
                                     {
@@ -153,7 +158,7 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                             <Form.Item
                                 name="date"
                                 label="Date"
-                                className={Style.formItem}
+                                className={Style.form}
                                 rules={[
                                     {
                                         required: true,
@@ -164,7 +169,7 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                                 <DatePicker/>
                             </Form.Item>
                             <Form.Item
-                                className={Style.formItem}
+                                className={Style.form}
                             >
                                 <Button type="primary" htmlType="submit">
                                     Query
@@ -195,42 +200,48 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                                 <Table.Column<TimeSlot> key="doctorName" title="Doctor Name" dataIndex="doctorName"/>
                                 <Table.Column<TimeSlot> key="startTime" title="Start Time" dataIndex="startTime"/>
                                 <Table.Column<TimeSlot> key="endTime" title="End Time" dataIndex="endTime"/>
-                                <Table.Column<TimeSlot> key="action" title="Action"
-                                                        render={(value: any, record: TimeSlot) => (
-                                                            <Button onClick={() => {
-                                                                $.ajax({
-                                                                    type: "POST",
-                                                                    url: SERVER_ADDR + "/patient/appointment/reservation",
-                                                                    dataType: 'json',
-                                                                    data: {
-                                                                        schedule_id: record.scheduleId,
-                                                                        date: record.date,
-                                                                        doctor_id: record.doctorId
-                                                                    },
-                                                                    crossDomain: true,
-                                                                    xhrFields: {
-                                                                        withCredentials: true
-                                                                    },
-                                                                    success: (data: any) => {
-                                                                        this.myState.hasError = false;
-                                                                        this.myState.hasSuccess = false;
-                                                                        if (data.success!) {
-                                                                            this.myState.hasSuccess = true;
-                                                                            this.myState.message = "Made reservation successfully!"
-                                                                        } else {
-                                                                            this.myState.hasError = true;
-                                                                            this.myState.message = "Failed to make reservation: " + data.error_message!;
-                                                                        }
-                                                                    },
-                                                                    error: () => {
-                                                                        notification["error"]({
-                                                                            message: "Server Error",
-                                                                            description: "Unable to make reservation."
-                                                                        });
-                                                                    }
-                                                                })
-                                                            }}>Make Reservation</Button>
-                                                        )}/>
+                                <Table.Column<TimeSlot>
+                                    key="action"
+                                    title="Action"
+                                    render={(value: any, record: TimeSlot) => (
+                                        <Button onClick={() => {
+                                            this.myState.spinning = true;
+                                            $.ajax({
+                                                type: "POST",
+                                                url: SERVER_ADDR + "/patient/appointment/reservation",
+                                                dataType: 'json',
+                                                data: {
+                                                    schedule_id: record.scheduleId,
+                                                    date: record.date,
+                                                    doctor_id: record.doctorId
+                                                },
+                                                crossDomain: true,
+                                                xhrFields: {
+                                                    withCredentials: true
+                                                },
+                                                success: (data: any) => {
+                                                    this.myState.spinning = false;
+                                                    this.myState.hasError = false;
+                                                    this.myState.hasSuccess = false;
+                                                    if (data.success!) {
+                                                        this.myState.hasSuccess = true;
+                                                        this.myState.message = "Made reservation successfully!"
+                                                    } else {
+                                                        this.myState.hasError = true;
+                                                        this.myState.message = "Failed to make reservation: " + data.error_message!;
+                                                    }
+                                                },
+                                                error: () => {
+                                                    this.myState.spinning = false;
+                                                    notification["error"]({
+                                                        message: "Server Error",
+                                                        description: "Unable to make reservation."
+                                                    });
+                                                }
+                                            });
+                                        }}>Make Reservation</Button>
+                                    )}
+                                />
                             </Table>
                         </Card>
                     </Spin>

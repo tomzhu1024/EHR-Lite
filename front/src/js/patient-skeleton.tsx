@@ -4,14 +4,16 @@ import {History} from "history";
 import {IObservableObject, observable} from "mobx";
 import $ from "jquery";
 import {Layout, Menu, notification} from "antd";
-import {LaptopOutlined, LogoutOutlined, NotificationOutlined, UserOutlined} from "@ant-design/icons";
+import {LaptopOutlined, LogoutOutlined, NotificationOutlined, UserOutlined, PlusOutlined, CalendarOutlined} from "@ant-design/icons";
 import {Route, RouteComponentProps} from "react-router-dom";
 import {Scrollbar} from "react-scrollbars-custom";
 
-import {PatientMakeReservation} from "./patient-app";
 import {SERVER_ADDR} from "./misc/const";
 import Style from "../css/patient-skeleton.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
+import {PatientMakeReservation} from "./patient-make-reservation";
+import {PatientCheckReservation} from "./patient-check-reservation";
+import {Test} from "./test";
 
 const {SubMenu} = Menu;
 const {Header, Footer, Sider, Content} = Layout;
@@ -50,9 +52,15 @@ class Navbar extends React.Component<{ history: History }, {}> {
         return (
             <div className={Style.navBar}>
                 <div>
-                    <img src={Logo} alt=""/>
+                    <img src={Logo} alt="" onDragStart={(event) => {
+                        event.preventDefault();
+                    }}/>
                 </div>
-                <Menu theme="dark" mode="horizontal" selectedKeys={[]}>
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    selectedKeys={[]}
+                >
                     <SubMenu icon={<UserOutlined/>} title={this.myState.displayName}>
                         <Menu.Item onClick={() => {
                             $.ajax({
@@ -78,19 +86,25 @@ class Navbar extends React.Component<{ history: History }, {}> {
 }
 
 @observer
-class SideMenu extends React.Component<{history: History}, {}> {
+class SideMenu extends React.Component<{ history: History }, {}> {
     render() {
         return (
             <>
                 <Menu
                     mode="inline"
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
+                    selectedKeys={[]}
+                    style={{borderRight: '5px'}}
                 >
-                    <SubMenu key="sub1" icon={<UserOutlined/>} title="subnav 1">
-                        <Menu.Item key="1" onClick={() => {
-                            this.props.history.push("/patient/newAppointment");
-                        }}>Make Appointment</Menu.Item>
+                    <SubMenu key="sub1" icon={<CalendarOutlined/>} title="My Reservation">
+                        <Menu.Item
+                            key="1"
+                            icon={<PlusOutlined/>}
+                            onClick={() => {
+                                this.props.history.push("/patient/makeReservation");
+                            }}
+                        >
+                            Add New
+                        </Menu.Item>
                         <Menu.Item key="2">option2</Menu.Item>
                         <Menu.Item key="3">option3</Menu.Item>
                         <Menu.Item key="4">option4</Menu.Item>
@@ -129,14 +143,16 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
                     </Sider>
                     <Content>
                         <Scrollbar noScrollX={true}>
-                            <div className={Style.scrollableContent}>
-                                <Route path="/patient/newAppointment" component={PatientMakeReservation}/>
+                            <div style={{padding: "25px"}}>
+                                <Route path="/patient/makeReservation" component={PatientMakeReservation}/>
+                                <Route path="/patient/checkReservation" component={PatientCheckReservation}/>
+                                <Route path="/patient/test" component={Test}/>
                             </div>
                         </Scrollbar>
                     </Content>
                 </Layout>
                 <Footer>
-                    <div className={Style.centered}>Patient Side - EHR Lite © 2020</div>
+                    <div style={{textAlign: "center"}}>Patient Side - EHR Lite © 2020</div>
                 </Footer>
             </Layout>
         );

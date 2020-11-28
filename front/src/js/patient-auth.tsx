@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
@@ -23,7 +24,7 @@ const formState: {
 });
 
 @observer
-class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
+class PatientLogin extends React.Component<RouteComponentProps, {}> {
     formRef = React.createRef<FormInstance>();
 
     componentDidMount() {
@@ -78,6 +79,9 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
     render() {
         return (
             <>
+                <Helmet>
+                    <title>Patient Login - EHR Lite</title>
+                </Helmet>
                 <div className={style.gradient}/>
                 <div className={style.loginBox}>
                     <Spin spinning={formState.spinning}>
@@ -165,7 +169,7 @@ class PatientLoginPage extends React.Component<RouteComponentProps, {}> {
 }
 
 @observer
-class PatientRegisterPage extends React.Component<RouteComponentProps, {}> {
+class PatientRegister extends React.Component<RouteComponentProps, {}> {
     formRef = React.createRef<FormInstance>();
 
     componentDidMount() {
@@ -224,6 +228,9 @@ class PatientRegisterPage extends React.Component<RouteComponentProps, {}> {
     render() {
         return (
             <>
+                <Helmet>
+                    <title>Patient Register - EHR Lite</title>
+                </Helmet>
                 <div className={style.gradient}/>
                 <div className={style.registerBox}>
                     <Spin spinning={formState.spinning}>
@@ -337,5 +344,5 @@ class PatientRegisterPage extends React.Component<RouteComponentProps, {}> {
 }
 
 export {
-    PatientLoginPage, PatientRegisterPage
+    PatientLogin, PatientRegister
 };
