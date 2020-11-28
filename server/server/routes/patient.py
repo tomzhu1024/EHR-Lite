@@ -115,9 +115,8 @@ def patient_make_reservation():
         record = patient.new_record()
         patient.new_appointment(record_id=record.record_id, schedule_id=schedule_id, schedule_date=schedule_date)
     except Exception as e:
-        print(e)
         return jsonify(success=False,
-                       error_message='server error')
+                       error_message=str(e))
     return jsonify(success=True)
 
 
