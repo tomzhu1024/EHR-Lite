@@ -126,7 +126,6 @@ def patient_get_record():
     patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
     records = patient.records
     data = [{'record_id': record.record_id, 'date': str(record.date), 'stage': record.stage} for record in records]
-    data.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%Y-%m-%d').date(), reverse=True)
     return jsonify(success=True,
                    data=data)
 
@@ -167,6 +166,19 @@ def patient_get_position():
         position = patient.position(appoint)
         return jsonify(success=True,
                        data=position)
+
+
+@app.route("/patient/currentAppointment", methods=['GET'])
+@login_required
+def patient_current_appointment():
+    appoint = current_user.current_appointment()
+    if not appoint:
+        return jsonify(has_appointment=False)
+    else:
+        return jsonify(has_appointment=True,
+                       date=str(appoint.schedule_date))
+
+
 
 
 @app.route("/patient/checkStage", methods=['GET'])
