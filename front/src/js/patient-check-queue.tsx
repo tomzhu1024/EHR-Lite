@@ -1,10 +1,12 @@
 import React from "react";
 import {RouteComponentProps} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {Breadcrumb, Button, Card, Result, Space, Spin} from "antd";
+import {Breadcrumb, Button, Card, notification, Result, Space, Spin} from "antd";
 import {HomeOutlined, ScheduleOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
+import $ from "jquery";
+import {SERVER_ADDR} from "./misc/const";
 
 @observer
 class FigureIcon extends React.Component<{ figure: number }, {}> {
@@ -43,13 +45,36 @@ class PatientCheckQueue extends React.Component<RouteComponentProps, {}> {
     } & IObservableObject = observable({
         isInQueue: true,
         position: 10,
-        spinning: true
+        spinning: false
     });
     timer: number;
 
     update = () => {
-        this.myState.isInQueue = true;
-        this.myState.position = Math.trunc(Math.random() * 20);
+        this.myState.spinning = true;
+        $.ajax({
+            type: "GET",
+            url: SERVER_ADDR + "/patient/checkQueue",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: (data: any) => {
+                this.myState.spinning = false;
+                if (data.success!) {
+                    this.myState.isInQueue = true;
+                    this.myState.position = data.data!;
+                } else {
+                    this.myState.isInQueue = false;
+                }
+            },
+            error: () => {
+                this.myState.spinning = false;
+                notification["error"]({
+                    message: "Server Error",
+                    description: "Unable to fetch queue information."
+                });
+            }
+        });
     }
 
     componentDidMount() {
@@ -60,7 +85,6 @@ class PatientCheckQueue extends React.Component<RouteComponentProps, {}> {
     }
 
     componentWillUnmount() {
-        console.log('clearing timer');
         window.clearInterval(this.timer);
     }
 
@@ -71,13 +95,13 @@ class PatientCheckQueue extends React.Component<RouteComponentProps, {}> {
                     <title>Queue Status - EHR Lite</title>
                 </Helmet>
                 <Breadcrumb>
-                    <Breadcrumb.Item>
+                    <Breadcrumb.Item href="#/">
                         <HomeOutlined/>
                         <span>Patient Home</span>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                         <ScheduleOutlined/>
-                        <span>My Reservation</span>
+                        <span>My Appointment</span>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                         <span>Queue Status</span>
@@ -89,14 +113,14 @@ class PatientCheckQueue extends React.Component<RouteComponentProps, {}> {
                             {this.myState.isInQueue ? (
                                 <Result
                                     icon={<FigureIcon figure={this.myState.position}/>}
-                                    title={`Please wait for a while! You are currently at position ${this.myState.position}.`}
+                                    title={`Wait a minute! You are in position ${this.myState.position}.`}
                                     subTitle="This page will refresh automatically..."
                                 />
                             ) : (
                                 <Result
                                     status="info"
-                                    title="You are not in any queue!"
-                                    subTitle={''}
+                                    title="You are not in the queue!"
+                                    subTitle={'You should check-in at the front-desk in-person.'}
                                     extra={[
                                         <Button key="home" onClick={() => {
                                             this.props.history.push("/");
@@ -105,7 +129,6 @@ class PatientCheckQueue extends React.Component<RouteComponentProps, {}> {
                                         </Button>
                                     ]}
                                 />
-
                             )}
                         </Card>
                     </Spin>

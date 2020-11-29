@@ -11,7 +11,7 @@ import $ from "jquery";
 import {SERVER_ADDR} from "./misc/const";
 import Style from "../css/patient-skeleton.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
-import {PatientMakeReservation} from "./patient-make-reservation";
+import {PatientMakeAppointment} from "./patient-make-appointment";
 import {PatientCheckQueue} from "./patient-check-queue";
 import {PatientCheckHistory} from "./patient-check-history";
 import {PatientHome} from "./patient-home";
@@ -106,14 +106,14 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                     >
                         Home
                     </Menu.Item>
-                    <SubMenu key="2" icon={<ScheduleOutlined/>} title="My Reservation">
+                    <SubMenu key="2" icon={<ScheduleOutlined/>} title="My Appointment">
                         <Menu.Item
                             key="2sub1"
                             onClick={() => {
-                                this.props.history.push("/makeReservation");
+                                this.props.history.push("/makeAppointment");
                             }}
                         >
-                            New Reservation
+                            New Appointment
                         </Menu.Item>
                         <Menu.Item
                             key="2sub2"
@@ -184,7 +184,7 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
                         <Scrollbar noScrollX={true}>
                             <div style={{padding: "25px"}}>
                                 <Route path="/" exact component={PatientHome}/>
-                                <Route path="/makeReservation" component={PatientMakeReservation}/>
+                                <Route path="/makeAppointment" component={PatientMakeAppointment}/>
                                 <Route path="/checkQueue" component={PatientCheckQueue}/>
                                 <Route path="/checkHistory" component={PatientCheckHistory}/>
                             </div>

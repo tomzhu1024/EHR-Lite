@@ -34,21 +34,21 @@ interface TimeSlot {
 }
 
 @observer
-class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
+class PatientMakeAppointment extends React.Component<RouteComponentProps, {}> {
     myState: {
         spinning: boolean;
         hasError: boolean;
         hasSuccess: boolean;
         message: string;
-        existReservation: boolean;
-        existReservationDate: string;
+        existAppointment: boolean;
+        existAppointmentDate: string;
     } & IObservableObject = observable({
-        spinning: true,
+        spinning: false,
         hasError: false,
         hasSuccess: false,
         message: '',
-        existReservation: true,
-        existReservationDate: '2000-05-28',
+        existAppointment: false,
+        existAppointmentDate: '',
     });
     departmentList: Array<string> & IObservableArray<string> = observable([]);
     timeSlotData: Array<TimeSlot> & IObservableArray<TimeSlot> = observable([]);
@@ -78,6 +78,65 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                 notification["error"]({
                     message: "Server Error",
                     description: 'Unable to fetch department information.'
+                });
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: SERVER_ADDR + "/patient/getRecord",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: (data: any) => {
+                if (data.success!) {
+                    if (data.data!.filter((record: any) => record.stage! === "In Progress").length === 0) {
+                        this.myState.existAppointment = false;
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: SERVER_ADDR + "/patient/getAppointment",
+                            dataType: "json",
+                            data: {
+                                id: data.data!.filter((record: any) => record.stage! === "In Progress")[0].record_id!
+                            },
+                            crossDomain: true,
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            success: (data: any) => {
+                                if (data.success!) {
+                                    this.myState.existAppointment = true;
+                                    this.myState.existAppointmentDate = data.data!.filter(
+                                        (appointment: any) =>
+                                            appointment.stage! !== "Cancelled" && appointment.stage! !== "Finished"
+                                    )[0].date!;
+                                } else {
+                                    notification['error']({
+                                        message: 'Server Error',
+                                        description: 'Unable to fetch appointments.'
+                                    });
+                                }
+                            },
+                            error: () => {
+                                notification['error']({
+                                    message: 'Server Error',
+                                    description: 'Unable to fetch appointments.'
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    notification['error']({
+                        message: 'Server Error',
+                        description: 'Unable to fetch records.'
+                    });
+                }
+            },
+            error: () => {
+                notification['error']({
+                    message: 'Server Error',
+                    description: 'Unable to fetch records.'
                 });
             }
         });
@@ -134,28 +193,28 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
         return (
             <>
                 <Helmet>
-                    <title>New Reservation - EHR Lite</title>
+                    <title>New Appointment - EHR Lite</title>
                 </Helmet>
                 <Breadcrumb>
-                    <Breadcrumb.Item>
+                    <Breadcrumb.Item href="#/">
                         <HomeOutlined/>
                         <span>Patient Home</span>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
                         <ScheduleOutlined/>
-                        <span>My Reservation</span>
+                        <span>My Appointment</span>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <span>New Reservation</span>
+                        <span>New Appointment</span>
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <Space direction="vertical" style={{width: "100%", marginTop: "20px"}}>
-                    {this.myState.existReservation ? (
+                    {this.myState.existAppointment ? (
                         <Card>
                             <Result
-                                status="info"
-                                title="You are currently unable to make new reservation!"
-                                subTitle={`You already have an appointment on ${this.myState.existReservationDate}.`}
+                                status="success"
+                                title={`You already have an appointment on ${this.myState.existAppointmentDate}.`}
+                                subTitle="You are currently unable to make new appointment!"
                                 extra={[
                                     <Button key="home" onClick={() => {
                                         this.props.history.push("/");
@@ -260,21 +319,21 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
                                                             this.myState.hasSuccess = false;
                                                             if (data.success!) {
                                                                 this.myState.hasSuccess = true;
-                                                                this.myState.message = "Made reservation successfully!"
+                                                                this.myState.message = "Made appointment successfully!"
                                                             } else {
                                                                 this.myState.hasError = true;
-                                                                this.myState.message = "Failed to make reservation: " + data.error_message!;
+                                                                this.myState.message = "Unable to make appointment: " + data.error_message!;
                                                             }
                                                         },
                                                         error: () => {
                                                             this.myState.spinning = false;
                                                             notification["error"]({
                                                                 message: "Server Error",
-                                                                description: "Unable to make reservation."
+                                                                description: "Unable to make appointment."
                                                             });
                                                         }
                                                     });
-                                                }}>Make Reservation</Button>
+                                                }}>Make Appointment</Button>
                                             )}
                                         />
                                     </Table>
@@ -289,5 +348,5 @@ class PatientMakeReservation extends React.Component<RouteComponentProps, {}> {
 }
 
 export {
-    PatientMakeReservation
+    PatientMakeAppointment
 };
