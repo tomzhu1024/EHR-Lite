@@ -177,6 +177,7 @@ def patient_current_appointment():
     elif appoint.stage == 'Get Drug':
         return jsonify(has_appointment=True,
                        drug=appoint.drug,
+                       date=str(appoint.schedule_date),
                        diagnosis=appoint.diagnosis)
     else:
         return jsonify(has_appointment=True,
