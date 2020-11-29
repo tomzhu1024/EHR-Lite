@@ -12,7 +12,7 @@ import {SERVER_ADDR} from "./misc/const";
 import Style from "../css/patient-skeleton.module.less";
 import Logo from "../assets/EHRLiteLOGO.png";
 import {PatientMakeAppointment} from "./patient-make-appointment";
-import {PatientCheckQueue} from "./patient-check-queue";
+import {PatientCurrentAppointment} from "./patient-current-appointment";
 import {PatientCheckHistory} from "./patient-check-history";
 import {PatientHome} from "./patient-home";
 
@@ -113,15 +113,15 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                                 this.props.history.push("/makeAppointment");
                             }}
                         >
-                            New Appointment
+                            Make New
                         </Menu.Item>
                         <Menu.Item
                             key="2sub2"
                             onClick={() => {
-                                this.props.history.push("/checkQueue");
+                                this.props.history.push("/currentAppointment");
                             }}
                         >
-                            Queue Status
+                            Check Current
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="3" icon={<HistoryOutlined/>} title="My History">
@@ -185,7 +185,7 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
                             <div style={{padding: "25px"}}>
                                 <Route path="/" exact component={PatientHome}/>
                                 <Route path="/makeAppointment" component={PatientMakeAppointment}/>
-                                <Route path="/checkQueue" component={PatientCheckQueue}/>
+                                <Route path="/currentAppointment" component={PatientCurrentAppointment}/>
                                 <Route path="/checkHistory" component={PatientCheckHistory}/>
                             </div>
                         </Scrollbar>

@@ -3,12 +3,11 @@ import {RouteComponentProps} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import {Breadcrumb, Card, Collapse, notification, Space, Spin} from "antd";
 import {HistoryOutlined, HomeOutlined} from "@ant-design/icons";
-import {IObservableArray, IObservableObject, observable, toJS} from "mobx";
+import {IObservableArray, IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import {v4 as uuidv4} from "uuid";
 import $ from "jquery";
 import {SERVER_ADDR} from "./misc/const";
-import {uuid} from "react-scrollbars-custom/dist/types/util";
 
 const {Panel} = Collapse;
 
@@ -64,7 +63,7 @@ class PatientCheckHistory extends React.Component<RouteComponentProps, {}> {
                                     success: (data: any) => {
                                         this.myState.spinning = false;
                                         if (data.success!) {
-                                            resolve(observable(
+                                            resolve(
                                                 data.data!.map((appointment: any) => ({
                                                     date: appointment.date!,
                                                     doctorName: appointment.doctor_name!,
@@ -72,7 +71,7 @@ class PatientCheckHistory extends React.Component<RouteComponentProps, {}> {
                                                     stage: appointment.stage!,
                                                     drug: appointment.drug!,
                                                 }))
-                                            ));
+                                            );
                                         } else {
                                             notification['error']({
                                                 message: 'Server Error',
