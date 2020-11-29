@@ -9,7 +9,7 @@ function CheckQueue(props) {
       <Card
         title="Queue Status"
         bordered={false}
-        style={{ width: 305, boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)" }}
+        style={{ width: "20em", boxShadow: "0 0 2em rgba(0, 0, 0, 0.1)" }}
       >
         <div id={style["content-wrapper"]}>
           <div id={style["patient-order"]}>{ahead}</div>

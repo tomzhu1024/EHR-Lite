@@ -8,10 +8,10 @@ function BarImg(props) {
   const imgs = [appointmentImg, checkinImg, diagnosisImg, medicineImg];
   const alt = ["Appointment", "Check In", "Diagnosis", "Medicine"];
   const style1 = {
-    width: "100px",
+    width: "8em",
   };
   const style2 = {
-    width: "120px",
+    width: "10em",
   };
   return (
     <img

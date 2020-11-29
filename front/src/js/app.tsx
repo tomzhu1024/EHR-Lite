@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import CheckQueue from './components/patient-check-queue';
 import {HashRouter, Route} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import {Layout, Menu, Breadcrumb} from 'antd';
@@ -26,7 +27,8 @@ const appState: AppState = observable({
 class App extends React.Component<{ appState: AppState }, null> {
     render = () => (
         <div className="app">
-            <Helmet>
+            <CheckQueue ahead={10} />
+            {/* <Helmet>
                 <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width"/>
                 <link rel="shortcut icon" href={FavIcon}/>
@@ -93,7 +95,7 @@ class App extends React.Component<{ appState: AppState }, null> {
                         EHR Lite © 2020
                     </Footer>
                 </Layout>
-            </HashRouter>
+            </HashRouter> */}
         </div>
     );
 }
