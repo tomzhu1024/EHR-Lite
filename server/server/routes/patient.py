@@ -126,6 +126,7 @@ def patient_get_record():
     patient = Patient.query.filter_by(patient_id=current_user.patient_id).first()
     records = patient.records
     data = [{'record_id': record.record_id, 'date': str(record.date), 'stage': record.stage} for record in records]
+    data.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%Y-%m-%d').date())
     return jsonify(success=True,
                    data=data)
 
