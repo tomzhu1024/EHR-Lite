@@ -147,7 +147,7 @@ def patient_get_appointment():
         return jsonify(success=False,
                        error_message="Invalid input")
     data = [{'appointment_id': appointment.appointment_id, 'doctor_id': appointment.doctor_id,
-             'date': appointment.schedule_date, 'doctor_name': appointment.doctor.name,
+             'date': str(appointment.schedule_date), 'doctor_name': appointment.doctor.name,
              'diagnosis': appointment.diagnosis, 'stage': appointment.stage,
              'drug': appointment.drug} for appointment in record.appointments]
     return jsonify(success=True,
