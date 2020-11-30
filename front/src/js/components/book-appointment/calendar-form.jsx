@@ -6,28 +6,37 @@ import style from "../../../css/calendar-form.module.css";
 
 const { SubMenu } = Menu;
 const data = [
-    ["9:00 - 10:00", ["Doctor Smith"]],
-    ["10:00 - 11:00", ["Doctor Wang"]],
-    ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ];
+  ["9:00 - 10:00", ["Doctor Smith"]],
+  ["10:00 - 11:00", ["Doctor Wang"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
+];
 
 function onSelectSlot(item) {
   // get the selected doctor & time slot
-  let x, y, num = 0;
+  let x,
+    y,
+    num = 0;
   const key = parseInt(item.key);
   data.forEach((e, i) => {
-    num ++;
+    num++;
     e[1].forEach((se, si) => {
-      num ++;
+      num++;
       console.log(num);
-      if (num === key){
+      if (num === key) {
         console.log("matched");
       }
-    })
-  })
+    });
+  });
 }
 
-function onSelectDate(item){
+function onSelectDate(item) {
   const date = item._d;
   console.log(date);
 }
@@ -39,9 +48,12 @@ function CalendarForm(props) {
     <div className={style["calendar-form-wrapper"]}>
       <div className={style["date-container"]}>
         <Calendar fullscreen={false} onSelect={onSelectDate} />
+        <Divider orientation="center" style={{ color: "#202020" }}>
+          Available Slots
+        </Divider>
       </div>
-      <Divider orientation="center">Available Slots</Divider>
       <div className={style["timeslots-container"]}>
+        
         {data[0] === -1 ? (
           // display empty if there is no available time slot
           <Empty
@@ -53,7 +65,6 @@ function CalendarForm(props) {
           ></Empty>
         ) : (
           <Menu
-            style={{ width: 450 }}
             multiple={false}
             defaultSelectedKeys={["1"]}
             mode={"inline"}
@@ -61,15 +72,11 @@ function CalendarForm(props) {
             onClick={onSelectSlot}
           >
             {data.map((e, i) => {
-              num ++;
+              num++;
               return (
-                <SubMenu
-                  key={num}
-                  title={e[0]}
-                  icon={<CalendarOutlined  />}
-                >
+                <SubMenu key={num} title={e[0]} icon={<CalendarOutlined />}>
                   {e[1].map((se, si) => {
-                    num ++;
+                    num++;
                     return <Menu.Item key={num}>{se}</Menu.Item>;
                   })}
                 </SubMenu>
@@ -81,6 +88,5 @@ function CalendarForm(props) {
     </div>
   );
 }
-
 
 export default CalendarForm;

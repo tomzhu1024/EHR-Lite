@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../css/diagnosis-page.module.css";
+import style from "../../../css/diagnosis-page.module.css";
 import { Button, Table } from "antd";
 import DoctorText from "./doctor-text";
 
@@ -33,9 +33,9 @@ function DiagnosisPage(props) {
             dataSource={patientInfo}
             columns={columns}
             pagination={false}
-            style={{ "margin-left":"20px", width: "770px" }}
           />
           <div className={style["check-history"]}><a>View Previous Records</a></div>
+          <div className={style["clear-fix"]}></div>
         </div>
         <div className={style["diagnosis-page-container"]}>
           <div className={style["title-wrapper"]}>

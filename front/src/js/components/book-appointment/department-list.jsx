@@ -8,13 +8,13 @@ function onClickDepartment(item){
 }
 
 function DepartmentList(props) {
-  const departments = ["Anesthetics", "Burn Center", "Diagnostic Imaging", "Chaplaincy", "Haematology", "Oncology", "Gastroenterology", "Intensive Care Unit", "Cardiology"];
+  const departments = ["Anesthetics", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Diagnostic Imaging", "Chaplaincy", "Haematology", "Oncology", "Gastroenterology", "Intensive Care Unit", "Cardiology"];
   return (
+    
     <div id={style["main-container"]}>
       <div id={style["title-wrapper"]}>
         <h1>Departments</h1>
       </div>
-      <Divider />
       <div className={style["department-list-wrapper"]}>
         <Menu
           defaultSelectedKeys={["1"]}

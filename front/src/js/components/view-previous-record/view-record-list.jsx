@@ -2,9 +2,10 @@ import React from "react";
 import { Table, Tag, Space } from "antd";
 
 function ViewRecordList(props) {
+  console.log(props.patientInfo);
   const patientInfo = props.patientInfo;
   const columns = [
-    { title: "Date", dataIndex: "department", key: "date" },
+    { title: "Date", dataIndex: "date", key: "date" },
     { title: "Department", dataIndex: "department", key: "department" },
   ];
 

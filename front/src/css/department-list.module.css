@@ -6,26 +6,25 @@
 
 #main-container {
     /* border: 1px solid black; */
-    width: 450px;
-    height: 700px;
-    overflow: scroll;
-    /* width: ; */
+    width: 100%;
+    height: 50em;
+    background-color: white;
 }
 
 #main-container #title-wrapper {
-    /* background-color: rgb(250, 250, 250); */
-    /* text-align: center; */
-    margin-top: 20px;
-    width: 450px;
+    padding-top:1.5em;
+    padding-left:1.5em;
+    height: 12%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 #main-container #title-wrapper h1 {
-    text-align: center;
+    /* text-align: center; */
     font-size: x-large;
     color: rgb(30, 30, 30);
 }
 
-#main-container #list-wrapper {
-    overflow: hidden;
-    width: 450px;
+.department-list-wrapper {
+    height: 88%;
+    overflow: scroll;
 }

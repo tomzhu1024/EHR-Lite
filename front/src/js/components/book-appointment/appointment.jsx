@@ -5,7 +5,7 @@ import style from "../../../css/appointment.module.css"
 
 function Appointment(props) {
   return (
-    <>
+    <div style={{height:"fit-content"}}>
       <div className={style["department-list"]}>
         <DepartmentList />
       </div>
@@ -13,7 +13,7 @@ function Appointment(props) {
         <CalendarForm />
       </div>
       <div className={style["clear-fix"]}></div>
-    </>
+    </div>
   );
 }
 

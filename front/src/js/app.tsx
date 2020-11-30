@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import CheckQueue from './components/patient-check-queue';
+import DiagnosisPage from './components/doctor-diagnosis/diagnosis-page'
+import CheckPrescription from './components/check-prescription/check-prescription'
 import {HashRouter, Route} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import {Layout, Menu, Breadcrumb} from 'antd';
@@ -10,6 +11,8 @@ import {Navbar} from "./modules/navbar";
 import {LoginPage} from "./modules/login-page";
 import FavIcon from "../assets/favicon.png";
 import {observable} from "mobx";
+import PatientSearchBar from "./components/patient-search-bar";
+import CheckQueue from "./components/patient-check-queue";
 
 const {SubMenu} = Menu;
 const {Header, Sider, Content, Footer} = Layout;
@@ -24,10 +27,19 @@ const appState: AppState = observable({
     displayName: "test"
 });
 
+const patientInfo=[
+    {
+        key: '1',
+        date: "2018-10-12",
+        department: "Oncology"
+    }
+]
+
 class App extends React.Component<{ appState: AppState }, null> {
     render = () => (
         <div className="app">
-            <CheckQueue ahead={10} />
+            <CheckPrescription prescriptions={"Cheemo therapy"}/>
+            {/* <DiagnosisPage /> */}
             {/* <Helmet>
                 <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width"/>

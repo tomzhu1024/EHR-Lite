@@ -1,9 +1,12 @@
 .department-list {
   float: left;
+  background-color: white;
+  width: 25%;
 }
 
 .calendar-form {
   float: left;
+  width:75%;
 }
 
 .clear-fix {

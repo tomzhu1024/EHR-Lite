@@ -1,14 +1,18 @@
+.main-container {
+    width: 100%;
+}
+
 .title {
     float: left;
     color: rgba(0, 0, 0, 0.01);
-    width: 120px;
-    margin-left: 10px;
-    margin-right: 20px;
+    width: 15%;
+    /* margin-left: 0.6em;
+    margin-right: 1.5em; */
 }
 
 .text-area {
-    float: left;
-    margin-right: 20px;
+    float: right;
+    width:80%;
 }
 
 .clear-fix {
@@ -16,10 +20,10 @@
 }
 
 .tri{
-    margin-left: 30px;
-    margin-top: 8px;
+    margin-left: 2.5em;
+    margin-top: 0.4em;
     float: left;
-    border-width: 5px;
+    border-width: 0.5em;
     border-style: solid;
     border-color: transparent  transparent transparent black;
     padding: 0px; 

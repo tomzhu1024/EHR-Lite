@@ -1,6 +1,5 @@
 import React from "react";
 import { Descriptions, Badge } from "antd";
-import { resetGlobalState } from "mobx/lib/internal";
 
 const style = {
   // table cells are black without this background color property
