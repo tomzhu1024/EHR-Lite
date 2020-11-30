@@ -83,54 +83,17 @@ class PatientMakeAppointment extends React.Component<RouteComponentProps, {}> {
         });
         $.ajax({
             type: "GET",
-            url: SERVER_ADDR + "/patient/getRecord",
+            url: SERVER_ADDR + "/patient/currentAppointment",
             crossDomain: true,
             xhrFields: {
                 withCredentials: true
             },
             success: (data: any) => {
-                if (data.success!) {
-                    if (data.data!.filter((record: any) => record.stage! === "In Progress").length === 0) {
-                        this.myState.existAppointment = false;
-                    } else {
-                        $.ajax({
-                            type: "POST",
-                            url: SERVER_ADDR + "/patient/getAppointment",
-                            dataType: "json",
-                            data: {
-                                id: data.data!.filter((record: any) => record.stage! === "In Progress")[0].record_id!
-                            },
-                            crossDomain: true,
-                            xhrFields: {
-                                withCredentials: true
-                            },
-                            success: (data: any) => {
-                                if (data.success!) {
-                                    this.myState.existAppointment = true;
-                                    this.myState.existAppointmentDate = data.data!.filter(
-                                        (appointment: any) =>
-                                            appointment.stage! !== "Cancelled" && appointment.stage! !== "Finished"
-                                    )[0].date!;
-                                } else {
-                                    notification['error']({
-                                        message: 'Server Error',
-                                        description: 'Unable to fetch appointments.'
-                                    });
-                                }
-                            },
-                            error: () => {
-                                notification['error']({
-                                    message: 'Server Error',
-                                    description: 'Unable to fetch appointments.'
-                                });
-                            }
-                        });
-                    }
+                if (data.has_appointment!) {
+                    this.myState.existAppointment = true;
+                    this.myState.existAppointmentDate = data.date!;
                 } else {
-                    notification['error']({
-                        message: 'Server Error',
-                        description: 'Unable to fetch records.'
-                    });
+                    this.myState.existAppointment = false;
                 }
             },
             error: () => {
@@ -205,14 +168,14 @@ class PatientMakeAppointment extends React.Component<RouteComponentProps, {}> {
                         <span>My Appointment</span>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <span>New Appointment</span>
+                        <span>Make New</span>
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <Space direction="vertical" style={{width: "100%", marginTop: "20px"}}>
                     {this.myState.existAppointment ? (
                         <Card>
                             <Result
-                                status="success"
+                                status="info"
                                 title={`You already have an appointment on ${this.myState.existAppointmentDate}.`}
                                 subTitle="You are currently unable to make new appointment!"
                                 extra={[

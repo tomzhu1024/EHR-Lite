@@ -49,6 +49,8 @@ class PatientHome extends React.Component<RouteComponentProps, {}> {
                         this.myState.currentStep = 2;
                     } else if (data.stage! === "In Progress") {
                         this.myState.currentStep = 3;
+                    } else if (data.stage! === "In Dispense") {
+                        this.myState.currentStep = 4;
                     }
                 } else {
                     notification['error']({
@@ -82,17 +84,28 @@ class PatientHome extends React.Component<RouteComponentProps, {}> {
                 <Space direction="vertical" style={{width: "100%", marginTop: "20px"}}>
                     <Carousel autoplay autoplaySpeed={5000} effect="fade">
                         <div>
-                            <img style={contentStyle}
-                                 src={"https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"}/>
+                            <img
+                                style={contentStyle}
+                                src={"https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"}
+                            />
                         </div>
                         <div>
-                            <h3 style={contentStyle}>2</h3>
+                            <img
+                                style={contentStyle}
+                                src={"https://ichef.bbci.co.uk/news/800/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"}
+                            />
                         </div>
                         <div>
-                            <h3 style={contentStyle}>3</h3>
+                            <img
+                                style={contentStyle}
+                                src={"https://asia.olympus-imaging.com/content/000107507.jpg"}
+                            />
                         </div>
                         <div>
-                            <h3 style={contentStyle}>4</h3>
+                            <img
+                                style={contentStyle}
+                                src={"https://cdn.pixabay.com/photo/2020/11/24/12/23/flowering-dogwood-5772385_1280.jpg"}
+                            />
                         </div>
                     </Carousel>
                     <Spin spinning={this.myState.spinning}>
@@ -142,7 +155,7 @@ class PatientHome extends React.Component<RouteComponentProps, {}> {
                                     title="Drugs Pick-up"
                                     description="Get your drugs."
                                     onClick={() => {
-                                        if (this.myState.currentStep === 3) {
+                                        if (this.myState.currentStep === 4) {
                                             // TODO: Link to CURRENT APPOINTMENT page
                                             this.props.history.push("/");
                                         }
