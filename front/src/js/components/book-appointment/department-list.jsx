@@ -8,7 +8,7 @@ function onClickDepartment(item){
 }
 
 function DepartmentList(props) {
-  const departments = ["Anesthetics", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Burn Center", "Diagnostic Imaging", "Chaplaincy", "Haematology", "Oncology", "Gastroenterology", "Intensive Care Unit", "Cardiology"];
+  const departments = props.departments;
   return (
     
     <div id={style["main-container"]}>

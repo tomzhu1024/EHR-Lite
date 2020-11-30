@@ -9,19 +9,23 @@ const boxProperty = [
   { title: "Prescription", line: 3 },
 ];
 
-const patientInfo = [
-  { key: "1", name: "Olivia", age: 32, ID: "N12345678", PhoneNum: "11662255378", Allergy: "qqq, www, eee, rrr" },
-];
-
 const columns = [
   { title: "Name", dataIndex: "name", key: "name" },
   { title: "Age", dataIndex: "age", key: "age" },
   { title: "ID", dataIndex: "ID", key: "ID" },
-  { title: "Phone Number", dataIndex: "PhoneNum", key: "PhoneNum"},
-  { title: "Allergy", dataIndex: "Allergy", key: "Allergy"}
+  { title: "Phone Number", dataIndex: "PhoneNum", key: "PhoneNum" },
+  { title: "Allergy", dataIndex: "Allergy", key: "Allergy" },
 ];
 
 function DiagnosisPage(props) {
+  const patientInfo = {
+    key: "1",
+    name: props.name,
+    age: props.age,
+    ID: props.ID,
+    PhoneNum: props.PhoneNum,
+    Allergy: props.Allergy,
+  };
   return (
     <>
       <div className={style["main-container"]}>
@@ -34,7 +38,9 @@ function DiagnosisPage(props) {
             columns={columns}
             pagination={false}
           />
-          <div className={style["check-history"]}><a>View Previous Records</a></div>
+          <div className={style["check-history"]}>
+            <a>View Previous Records</a>
+          </div>
           <div className={style["clear-fix"]}></div>
         </div>
         <div className={style["diagnosis-page-container"]}>

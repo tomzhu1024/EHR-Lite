@@ -5,18 +5,6 @@ import "antd/dist/result.css";
 import style from "../../../css/calendar-form.module.css";
 
 const { SubMenu } = Menu;
-const data = [
-  ["9:00 - 10:00", ["Doctor Smith"]],
-  ["10:00 - 11:00", ["Doctor Wang"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-  ["11:00 - 12:00", ["Doctor Chen", "Doctor Shen"]],
-];
 
 function onSelectSlot(item) {
   // get the selected doctor & time slot
@@ -44,6 +32,7 @@ function onSelectDate(item) {
 function CalendarForm(props) {
   // specify the list of time slots here
   let num = 0;
+  const data = props.timeSlots;
   return (
     <div className={style["calendar-form-wrapper"]}>
       <div className={style["date-container"]}>
