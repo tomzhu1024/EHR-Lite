@@ -4,7 +4,7 @@ from hashlib import md5
 import datetime
 
 from server import app, db
-from server.tables import Staff, Patient
+from server.tables import Staff, Patient, Appointment
 
 
 @app.route('/staff/login', methods=['POST'])
@@ -97,3 +97,24 @@ def staff_dipenser_check_prescription():
         cur_appoint = patient.current_appointment()
         return jsonify(success=True,
                        drug=cur_appoint.drug)
+
+
+@app.route("/staff/dispenser/finishAppointment", methods=['POST'])
+@login_required
+def staff_dispenser_finish_appointment():
+    try:
+        appointment_id = request.form.get('appointment_id')
+    except:
+        return jsonify(success=False,
+                       error_message='Invalid input')
+    appoint = Appointment.query.filter_by(appointment_id=appointment_id).first()
+
+    if not appoint:
+        return jsonify(success=False,
+                       error_message='No such appointment')
+    try:
+        appoint.finish()
+    except Exception as e:
+        return jsonify(success=False,
+                       error_message=str(e))
+    return jsonify(success=True)

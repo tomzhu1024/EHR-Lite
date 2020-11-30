@@ -178,6 +178,12 @@ class Appointment(db.Model):
     check_in_time = db.Column(db.DateTime(500), nullable=True)
     stage = db.Column(db.String(20), nullable=False)
 
+    def finish(self):
+        if self.stage not in ['In Progress', 'Get Drug']:
+            raise Exception("Can't end an appointment now")
+        self.record.stage = 'Finish'
+        self.stage = 'Finish'
+        db.session.commit()
 
 
 class Admin(db.Model, UserMixin):

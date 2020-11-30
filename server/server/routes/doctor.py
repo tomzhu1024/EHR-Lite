@@ -126,3 +126,27 @@ def doctor_get_record_detail():
              'diagnosis': appoint.diagnosis, 'drug': appoint.drug} for appoint in record.appointments]
     return jsonify(success=True,
                    data=data)
+
+
+@app.route("/doctor/finishAppointment", methods=['POST'])
+@login_required
+def doctor_finish_appointment():
+    try:
+        appointment_id = request.form.get('appointment_id')
+    except:
+        return jsonify(success=False,
+                       error_message='Invalid input')
+    appoint = Appointment.query.filter_by(appointment_id=appointment_id).first()
+
+    if not appoint:
+        return jsonify(success=False,
+                       error_message='No such appointment')
+    if appoint.doctor_id != current_user.doctor_id:
+        return jsonify(success=False,
+                       error_message='Not your Appointment')
+    try:
+        appoint.finish()
+    except Exception as e:
+        return jsonify(success=False,
+                       error_message=str(e))
+    return jsonify(success=True)
