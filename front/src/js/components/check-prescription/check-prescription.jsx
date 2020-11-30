@@ -3,14 +3,15 @@ import PatientSearchBar from "../patient-search-bar";
 import { Descriptions, Empty } from "antd";
 
 const mainContainer = {
-    backgroundColor: "white"
+  backgroundColor: "white",
+  height: "fit-content",
+  boxShadow: "0 0 1.5em rgba(0, 0, 0, 0.1)"
 };
 const searchBarContainer = {
-    padding:'3%'
+  padding: "3%",
 };
 const prescriptionContainer = {
-    padding:'3%',
-    backgroundColor: "white",
+  padding: "0% 3% 3% 3%",
 };
 
 function CheckPrescription(props) {
@@ -35,17 +36,26 @@ function CheckPrescription(props) {
             <div
               style={{
                 width: "20%",
+                minWidth: "10em",
                 height: "100%",
                 backgroundColor: "rgba(0, 0, 0, 0.05)",
                 float: "left",
                 textAlign: "center",
-                // verticalAlign: "middle",
-                lineHeight: "15em"
+                lineHeight: "15em",
               }}
             >
-              <h3>Prescription</h3>
+              <h2>Prescriptions</h2>
             </div>
-            <div style={{ width: "80%", height: "100%", float: "left", padding:'3%', overflow:'scroll'}}>
+            <div
+              style={{
+                width: "80%",
+                height: "100%",
+                float: "left",
+                padding: "3%",
+                border: "1px solid rgba(0, 0, 0, 0.05)",
+                overflow: "hidden",
+              }}
+            >
               {prescriptions}
             </div>
             <div style={{ clear: "both" }}></div>
