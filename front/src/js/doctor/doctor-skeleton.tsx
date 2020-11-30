@@ -4,17 +4,14 @@ import {IObservableObject, observable} from "mobx";
 import {Route, RouteComponentProps} from "react-router-dom";
 import {History} from "history";
 import {Layout, Menu, notification} from "antd";
-import {HistoryOutlined, HomeOutlined, LogoutOutlined, ScheduleOutlined, UserOutlined} from "@ant-design/icons";
+import {HomeOutlined, LogoutOutlined, UserOutlined} from "@ant-design/icons";
 import {Scrollbar} from "react-scrollbars-custom";
 import $ from "jquery";
 
-import {SERVER_ADDR} from "./misc/const";
-import Style from "../css/patient-skeleton.module.less";
-import Logo from "../assets/EHRLiteLOGO.png";
-import {PatientMakeAppointment} from "./patient-make-appointment";
-import {PatientCurrentAppointment} from "./patient-current-appointment";
-import {PatientCheckHistory} from "./patient-check-history";
-import {PatientHome} from "./patient-home";
+import {SERVER_ADDR} from "../misc/const";
+import Style from "../../css/doctor/doctor-skeleton.module.less";
+import Logo from "../../assets/EHRLiteLOGO.png";
+import {DoctorHome} from "./doctor-home";
 
 const {SubMenu} = Menu;
 const {Header, Footer, Sider, Content} = Layout;
@@ -66,7 +63,7 @@ class Navbar extends React.Component<{ history: History }, {}> {
                         <Menu.Item onClick={() => {
                             $.ajax({
                                 type: "GET",
-                                url: SERVER_ADDR + "/patient/logout",
+                                url: SERVER_ADDR + "/doctor/logout",
                                 crossDomain: true,
                                 xhrFields: {
                                     withCredentials: true
@@ -94,7 +91,7 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                 <Menu
                     mode="inline"
                     selectedKeys={[]}
-                    defaultOpenKeys={["2", "3"]}
+                    defaultOpenKeys={[]}
                     style={{borderRight: '5px'}}
                 >
                     <Menu.Item
@@ -106,47 +103,19 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                     >
                         Home
                     </Menu.Item>
-                    <SubMenu key="2" icon={<ScheduleOutlined/>} title="My Appointment">
+                    <SubMenu key="2" icon={<UserOutlined/>} title="My Account">
                         <Menu.Item
                             key="2sub1"
-                            onClick={() => {
-                                this.props.history.push("/makeAppointment");
-                            }}
-                        >
-                            Make New
-                        </Menu.Item>
-                        <Menu.Item
-                            key="2sub2"
-                            onClick={() => {
-                                this.props.history.push("/currentAppointment");
-                            }}
-                        >
-                            Check Current
-                        </Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="3" icon={<HistoryOutlined/>} title="My History">
-                        <Menu.Item
-                            key="3sub1"
-                            onClick={() => {
-                                this.props.history.push("/checkHistory");
-                            }}
-                        >
-                            All Records
-                        </Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="4" icon={<UserOutlined/>} title="My Account">
-                        <Menu.Item
-                            key="4sub1"
                             disabled
                         >
                             Change Password
                         </Menu.Item>
                         <Menu.Item
-                            key="4sub2"
+                            key="2sub2"
                             onClick={() => {
                                 $.ajax({
                                     type: "GET",
-                                    url: SERVER_ADDR + "/patient/logout",
+                                    url: SERVER_ADDR + "/doctor/logout",
                                     crossDomain: true,
                                     xhrFields: {
                                         withCredentials: true
@@ -167,7 +136,7 @@ class SideMenu extends React.Component<{ history: History }, {}> {
 }
 
 @observer
-class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
+class DoctorSkeleton extends React.Component<RouteComponentProps, {}> {
     render() {
         return (
             <Layout className={Style.fixedLayout}>
@@ -175,24 +144,12 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
                     <Navbar history={this.props.history}/>
                 </Header>
                 <Layout>
-                    <Sider collapsedWidth={0} breakpoint={"lg"}>
-                        <Scrollbar noScrollX={true}>
-                            <SideMenu history={this.props.history}/>
-                        </Scrollbar>
-                    </Sider>
                     <Content>
-                        <Scrollbar noScrollX={true}>
-                            <div style={{padding: "25px"}}>
-                                <Route path="/" exact component={PatientHome}/>
-                                <Route path="/makeAppointment" component={PatientMakeAppointment}/>
-                                <Route path="/currentAppointment" component={PatientCurrentAppointment}/>
-                                <Route path="/checkHistory" component={PatientCheckHistory}/>
-                            </div>
-                        </Scrollbar>
+                        <Route path="/" exact component={DoctorHome}/>
                     </Content>
                 </Layout>
                 <Footer>
-                    <div style={{textAlign: "center"}}>Patient-side Client - EHR Lite © 2020</div>
+                    <div style={{textAlign: "center"}}>Doctor-side Client - EHR Lite © 2020</div>
                 </Footer>
             </Layout>
         );
@@ -200,5 +157,5 @@ class PatientSkeleton extends React.Component<RouteComponentProps, {}> {
 }
 
 export {
-    PatientSkeleton
+    DoctorSkeleton
 };

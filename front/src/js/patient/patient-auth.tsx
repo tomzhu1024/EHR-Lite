@@ -7,9 +7,9 @@ import {Alert, Button, Card, DatePicker, Form, Input, Space, Spin} from "antd";
 import {FormInstance} from "antd/lib/form";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import $ from "jquery";
-import {SERVER_ADDR} from "./misc/const";
-import {hash} from "./misc/util";
-import Style from "../css/patient-auth.module.less";
+import {SERVER_ADDR} from "../misc/const";
+import {hash} from "../misc/util";
+import Style from "../../css/patient/patient-auth.module.less";
 
 const formState: {
     hasError: boolean;
@@ -71,7 +71,7 @@ class PatientLogin extends React.Component<RouteComponentProps, {}> {
             error: () => {
                 formState.spinning = false;
                 formState.hasError = true;
-                formState.message = "Login Failed: Server error";
+                formState.message = "Login Failed: Server error.";
             }
         });
     }

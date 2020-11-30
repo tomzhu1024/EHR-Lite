@@ -6,7 +6,7 @@ import {HomeOutlined, ScheduleOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
-import {SERVER_ADDR} from "./misc/const";
+import {SERVER_ADDR} from "../misc/const";
 
 @observer
 class FigureIcon extends React.Component<{ figure: number }, {}> {
@@ -211,7 +211,6 @@ class PatientCurrentAppointment extends React.Component<RouteComponentProps, {}>
                                         </Button>
                                     ]}
                                 />
-
                             </Card>
                         ) : null}
                         {this.myState.stage === 1 ? (

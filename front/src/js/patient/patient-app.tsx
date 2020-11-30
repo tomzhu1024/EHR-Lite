@@ -4,8 +4,8 @@ import {Helmet} from "react-helmet";
 import {HashRouter, Route, Switch} from "react-router-dom";
 import {observer} from "mobx-react";
 
-import "../css/patient-app.less";
-import FavIcon from "../assets/favicon.png";
+import "../../css/patient/patient-app.less";
+import FavIcon from "../../assets/favicon.png";
 import {PatientLogin, PatientRegister} from "./patient-auth";
 import {PatientSkeleton} from "./patient-skeleton";
 

@@ -6,7 +6,7 @@ import {HomeOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
-import {SERVER_ADDR} from "./misc/const";
+import {SERVER_ADDR} from "../misc/const";
 
 const {Step} = Steps;
 
