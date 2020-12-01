@@ -48,6 +48,8 @@ def doctor_next_appointment():
                        error_message="No Patient in queue")
     else:
         try:
+            if appointment.stage != 'In Queue':
+                raise Exception
             appointment.stage = 'In Progress'
             db.session.commit()
         except:

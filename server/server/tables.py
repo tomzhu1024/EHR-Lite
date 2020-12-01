@@ -43,6 +43,8 @@ class Patient(db.Model, UserMixin):
 
     def current_appointment(self):
         record = self.current_record()
+        if not record:
+            return None
         for appoint in record.appointments:
             if appoint.stage in ['Upcoming', 'In Queue', 'In Progress', 'Get Drug']:
                 return appoint
