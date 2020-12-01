@@ -11,12 +11,10 @@ module.exports = merge(baseCfg, {
         contentBase: resolve(PROJECT_ROOT, 'build'),
         port: 9000,
         hot: true,
-        quiet: true,
-        stats: false,
         writeToDisk: true,
-        clientLogLevel: 'silent'
+        quiet: true,
     },
     plugins: [
-        new HotModuleReplacementPlugin()
+        new HotModuleReplacementPlugin(),
     ]
 });

@@ -56,7 +56,6 @@ class PatientCurrentAppointment extends React.Component<RouteComponentProps, {}>
     timer: number;
 
     update = () => {
-        this.myState.spinning = true;
         $.ajax({
             type: "GET",
             url: SERVER_ADDR + "/patient/checkStage",
@@ -159,6 +158,7 @@ class PatientCurrentAppointment extends React.Component<RouteComponentProps, {}>
     }
 
     componentDidMount() {
+        this.myState.spinning = true;
         this.update();
         this.timer = window.setInterval(() => {
             this.update();

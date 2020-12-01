@@ -1,81 +1,54 @@
 .mainPanel {
   width: 100%;
   height: 100%;
-  padding: 10px 20px;
 
-  :global .ant-card {
+  > :global.ant-spin-nested-loading {
     height: 100%;
-    width: 100%;
-  }
 
-  :global .ant-card-body {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    display: flex;
-  }
+    > .ant-spin-container {
+      height: 100%;
 
-  :global .ant-spin-nested-loading {
-    height: 100%;
-  }
+      > .ant-card {
+        height: 100%;
 
-  :global .ant-spin-container {
-    height: 100%;
-  }
-
-  :global .ant-result {
-    width: 100%;
-  }
-
-  :global .ant-empty {
-    margin: 140px 0 0 0;
+        > .ant-card-body {
+          height: 100%;
+          display: flex;
+          background-color: #ececec;
+        }
+      }
+    }
   }
 }
 
 .leftSubPanel {
   height: 100%;
   width: calc(100% - 300px);
-  padding: 10px;
 
-  :global .ant-tabs-nav {
-    margin-bottom: 0;
-  }
-
-  :global .ant-tabs {
-    height: 100%;
-  }
-
-  :global .ant-tabs-content {
-    height: 100%;
-    padding: 10px;
+  :global .ant-card {
+    margin: 10px 5px;
   }
 }
 
 .rightSubPanel {
   height: 100%;
   width: 300px;
-  padding: 10px;
 
-  :global .ant-tabs-nav {
-    margin-bottom: 0;
-  }
-
-  :global .ant-tabs {
-    height: 100%;
-  }
-
-  :global .ant-tabs-content {
-    height: 100%;
-    padding: 10px;
+  h1 {
+    margin-bottom: 5px;
   }
 
   :global .ant-card {
-    margin-top: 15px;
-    height: calc(100% - 80px);
+    margin: 10px 5px;
+    height: 100%;
   }
 
   :global .ant-card-body {
     height: 100%;
+  }
+
+  :global .ant-empty {
+    margin-top: 100px;
   }
 }
 

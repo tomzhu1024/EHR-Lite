@@ -285,7 +285,7 @@ class PatientMakeAppointment extends React.Component<RouteComponentProps, {}> {
                                                                 this.myState.message = "Made appointment successfully!"
                                                             } else {
                                                                 this.myState.hasError = true;
-                                                                this.myState.message = "Unable to make appointment: " + data.error_message!;
+                                                                this.myState.message = "Operation Failed: " + data.error_message!;
                                                             }
                                                         },
                                                         error: () => {
