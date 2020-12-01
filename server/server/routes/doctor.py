@@ -81,6 +81,7 @@ def doctor_submit_diagnosis():
         try:
             appointment.diagnosis = diagnosis
             appointment.stage = 'Get Drug'
+            appointment.drug = drug
             db.session.commit()
             return jsonify(success=True)
         except Exception as e:
