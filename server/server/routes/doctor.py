@@ -76,25 +76,28 @@ def doctor_submit_diagnosis():
     if not appointment:
         return jsonify(success=False,
                        error_message='Wrong appointment ID')
-    if not drug:
+    if drug:
+        print()
         try:
             appointment.diagnosis = diagnosis
             appointment.stage = 'Get Drug'
             db.session.commit()
+            return jsonify(success=True)
         except Exception as e:
             print(e)
             return jsonify(success=False,
                            error_messaga='Internal Error')
-    try:
-        appointment.diagnosis = diagnosis
-        appointment.drug = drug
-        db.session.commit()
-        appointment.finish()
-    except Exception as e:
-        print(e)
-        return jsonify(success=False,
-                       error_messaga='Internal Error')
-    return jsonify(success=True)
+    else:
+        try:
+            appointment.diagnosis = diagnosis
+            appointment.drug = drug
+            db.session.commit()
+            appointment.finish()
+        except Exception as e:
+            print(e)
+            return jsonify(success=False,
+                           error_messaga='Internal Error')
+        return jsonify(success=True)
 
 
 @app.route("/doctor/getQueue", methods=['GET'])
