@@ -26,7 +26,8 @@ def staff_login():
         else:
             login_user(staff)
             session['staff_id'] = staff.staff_id
-            return jsonify(success=True)
+            return jsonify(success=True,
+                           role=staff.role)
 
 
 @app.route("/staff/logout", methods=['GET'])
@@ -72,6 +73,9 @@ def staff_front_checkin():
                        error_message='No such patient')
     else:
         cur_appoint = patient.current_appointment()
+        if not cur_appoint:
+            return jsonify(success=False,
+                           error_message='Patient has no schedule today')
         if cur_appoint.stage != 'Upcoming' or cur_appoint.schedule_date != datetime.date.today():
             return jsonify(success=False,
                            error_message='Patient has no schedule today')

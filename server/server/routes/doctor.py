@@ -124,7 +124,7 @@ def doctor_get_record_detail():
     if not record:
         return jsonify(success=False,
                        error_message='No such record')
-    data = [{'date': appoint.schedule_date, 'doctor_name': appoint.doctor.name, 'department': appoint.doctor.department,
+    data = [{'date': str(appoint.schedule_date), 'doctor_name': appoint.doctor.name, 'department': appoint.doctor.department,
              'diagnosis': appoint.diagnosis, 'drug': appoint.drug} for appoint in record.appointments]
     return jsonify(success=True,
                    data=data)
