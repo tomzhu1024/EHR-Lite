@@ -76,10 +76,19 @@ def doctor_submit_diagnosis():
     if not appointment:
         return jsonify(success=False,
                        error_message='Wrong appointment ID')
+    if not drug:
+        try:
+            appointment.diagnosis = diagnosis
+            appointment.stage = 'Get Drug'
+            db.commit()
+        except:
+            return jsonify(success=False,
+                           error_messaga='Internal Error')
     try:
         appointment.diagnosis = diagnosis
         appointment.drug = drug
         db.session.commit()
+        appointment.finish()
     except:
         return jsonify(success=False,
                        error_messaga='Internal Error')
