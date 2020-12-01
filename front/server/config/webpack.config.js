@@ -9,7 +9,8 @@ const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        patient: resolve(PROJECT_ROOT, 'src/js/patient-app.tsx')
+        patient: resolve(PROJECT_ROOT, 'src/js/patient/patient-app.tsx'),
+        doctor: resolve(PROJECT_ROOT, 'src/js/doctor/doctor-app.tsx'),
     },
     output: {
         path: resolve(PROJECT_ROOT, 'build'),
@@ -84,11 +85,11 @@ module.exports = {
         ]
     },
     plugins: [
-        new WebpackBar({
-            color: IS_DEV ? '#fff300' : '#00fff7',
-        }),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
+        }),
+        new WebpackBar({
+            color: IS_DEV ? '#fff300' : '#00fff7',
         }),
         new FriendlyErrorsPlugin(),
         new HtmlWebpackPlugin({
@@ -98,7 +99,15 @@ module.exports = {
             minify: {
                 collapseWhitespace: true
             }
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
+            filename: 'doctor.html',
+            chunks: ['doctor'],
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],

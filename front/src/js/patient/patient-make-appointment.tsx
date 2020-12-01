@@ -20,7 +20,7 @@ import {IObservableArray, IObservableObject, observable, toJS} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
 
-import {SERVER_ADDR} from "./misc/const";
+import {SERVER_ADDR} from "../misc/const";
 
 interface TimeSlot {
     key: number;

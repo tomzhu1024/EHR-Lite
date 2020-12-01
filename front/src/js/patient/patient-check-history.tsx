@@ -1,13 +1,13 @@
 import React from "react";
 import {RouteComponentProps} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {Breadcrumb, Card, Collapse, notification, Space, Spin} from "antd";
+import {Breadcrumb, Card, Collapse, Empty, notification, Space, Spin} from "antd";
 import {HistoryOutlined, HomeOutlined} from "@ant-design/icons";
 import {IObservableArray, IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import {v4 as uuidv4} from "uuid";
 import $ from "jquery";
-import {SERVER_ADDR} from "./misc/const";
+import {SERVER_ADDR} from "../misc/const";
 
 const {Panel} = Collapse;
 
@@ -139,35 +139,42 @@ class PatientCheckHistory extends React.Component<RouteComponentProps, {}> {
                 <Space direction="vertical" style={{width: "100%", marginTop: "20px"}}>
                     <Spin spinning={this.myState.spinning}>
                         <Card style={{minHeight: "250px"}}>
-                            {this.myState.records.map((record: Record) => (
-                                <Collapse
-                                    key={uuidv4()}
-                                    style={{marginBottom: "15px"}}
-                                >
-                                    <Panel
-                                        key={uuidv4()}
-                                        header={'Record'}
-                                        extra={<span>{record.date}</span>}
-                                    >
-                                        {record.appointments.map((appointment: Appointment) => (
-                                            <Card
+                            {this.myState.records.length > 0 ? (
+                                <>
+                                    {this.myState.records.map((record: Record) => (
+                                        <Collapse
+                                            key={uuidv4()}
+                                            style={{marginBottom: "15px"}}
+                                        >
+                                            <Panel
                                                 key={uuidv4()}
-                                                title="Appointment"
-                                                extra={<span>{appointment.date}</span>}
+                                                header={'Record'}
+                                                extra={<span>{record.date}</span>}
                                             >
-                                                <h1>Stage</h1>
-                                                <p>{appointment.stage}</p>
-                                                <h1>Doctor Name</h1>
-                                                <p>{appointment.doctorName}</p>
-                                                <h1>Diagnosis</h1>
-                                                <p>{appointment.diagnosis || "(Empty)"}</p>
-                                                <h1>Drug</h1>
-                                                <p>{appointment.drug || "(Empty)"}</p>
-                                            </Card>
-                                        ))}
-                                    </Panel>
-                                </Collapse>
-                            ))}
+                                                {record.appointments.map((appointment: Appointment) => (
+                                                    <Card
+                                                        key={uuidv4()}
+                                                        title="Appointment"
+                                                        extra={
+                                                            <span>{appointment.date}</span>}
+                                                    >
+                                                        <h1>Stage</h1>
+                                                        <p>{appointment.stage}</p>
+                                                        <h1>Doctor Name</h1>
+                                                        <p>{appointment.doctorName}</p>
+                                                        <h1>Diagnosis</h1>
+                                                        <p>{appointment.diagnosis || "(Empty)"}</p>
+                                                        <h1>Drug</h1>
+                                                        <p>{appointment.drug || "(Empty)"}</p>
+                                                    </Card>
+                                                ))}
+                                            </Panel>
+                                        </Collapse>
+                                    ))}
+                                </>
+                            ) : (
+                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+                            )}
                         </Card>
                     </Spin>
                 </Space>
