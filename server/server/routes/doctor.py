@@ -80,8 +80,9 @@ def doctor_submit_diagnosis():
         try:
             appointment.diagnosis = diagnosis
             appointment.stage = 'Get Drug'
-            db.commit()
-        except:
+            db.session.commit()
+        except Exception as e:
+            print(e)
             return jsonify(success=False,
                            error_messaga='Internal Error')
     try:
@@ -89,7 +90,8 @@ def doctor_submit_diagnosis():
         appointment.drug = drug
         db.session.commit()
         appointment.finish()
-    except:
+    except Exception as e:
+        print(e)
         return jsonify(success=False,
                        error_messaga='Internal Error')
     return jsonify(success=True)
