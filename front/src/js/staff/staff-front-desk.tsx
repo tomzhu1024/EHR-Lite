@@ -3,17 +3,21 @@ import {Alert, Button, Card, Descriptions, Form, Input, notification, Space, Spi
 import {Helmet} from "react-helmet";
 import {SearchOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
+import {observer} from "mobx-react";
 import $ from "jquery";
 import {SERVER_ADDR} from "../misc/const";
 
+@observer
 class StaffFrontDesk extends React.Component<{}, {}> {
     myState: {
         spinning: boolean;
         hasResult: boolean;
         doctorName: string;
         department: string;
+        date: string;
         startTime: string;
         endTime: string;
+        stage: string;
         hasSuccess: boolean;
         hasError: boolean;
         message: string;
@@ -23,8 +27,10 @@ class StaffFrontDesk extends React.Component<{}, {}> {
         hasResult: false,
         doctorName: '',
         department: '',
+        date: '',
         startTime: '',
         endTime: '',
+        stage: '',
         hasSuccess: false,
         hasError: false,
         message: '',
@@ -53,8 +59,10 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                     this.myState.hasResult = true;
                     this.myState.doctorName = data.doctor_name!;
                     this.myState.department = data.department!;
+                    this.myState.date = data.date!;
                     this.myState.startTime = data.start_time!;
                     this.myState.endTime = data.end_time!;
+                    this.myState.stage = data.stage!;
                     this.myState.patientId = fieldsValue.id!;
                 } else {
                     this.myState.hasError = true;
@@ -73,7 +81,6 @@ class StaffFrontDesk extends React.Component<{}, {}> {
 
     onClick = () => {
         this.myState.spinning = true;
-        this.myState.hasResult = false;
         this.myState.hasSuccess = false;
         this.myState.hasError = false;
         $.ajax({
@@ -95,7 +102,7 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                     this.myState.message = "Operation completed successfully!";
                 } else {
                     this.myState.hasError = true;
-                    this.myState.message = "Operation failed: " + data.message!;
+                    this.myState.message = "Operation failed: " + data.error_message!;
                 }
             },
             error: () => {
@@ -116,12 +123,12 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                 </Helmet>
                 <div style={{
                     margin: "30px auto 0",
-                    maxWidth: "600px",
                     height: "100%",
+                    padding: "30px"
                 }}>
-                    <Space direction="vertical">
-                        <Spin spinning={this.myState.spinning}>
-                            <Card>
+                    <Space direction="vertical" style={{width: "100%"}}>
+                        <Spin spinning={this.myState.spinning} style={{width: "100%"}}>
+                            <Card style={{width: "100%"}}>
                                 <Form layout="inline" onFinish={this.onFinish}>
                                     <Form.Item
                                         label="Patient ID"
@@ -154,6 +161,10 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                                             <Descriptions.Item
                                                 label="Department">{this.myState.department}</Descriptions.Item>
                                             <Descriptions.Item
+                                                label="Date">{this.myState.date}</Descriptions.Item>
+                                            <Descriptions.Item
+                                                label="Stage">{this.myState.stage}</Descriptions.Item>
+                                            <Descriptions.Item
                                                 label="Start Time">{this.myState.startTime}</Descriptions.Item>
                                             <Descriptions.Item
                                                 label="End Time">{this.myState.endTime}</Descriptions.Item>
@@ -166,7 +177,7 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                         {this.myState.hasSuccess ? (
                             <Alert
                                 message="Operation Succeeded"
-                                description="Detailed description and advice about successful copywriting."
+                                description={this.myState.message}
                                 type="success"
                                 showIcon
                             />
@@ -174,7 +185,7 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                         {this.myState.hasError ? (
                             <Alert
                                 message="Operation Failed"
-                                description="Detailed description and advice about successful copywriting."
+                                description={this.myState.message}
                                 type="error"
                                 showIcon
                             />

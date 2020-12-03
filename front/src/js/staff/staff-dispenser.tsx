@@ -3,9 +3,11 @@ import {Alert, Button, Card, Descriptions, Form, Input, notification, Space, Spi
 import {Helmet} from "react-helmet";
 import {SearchOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
+import {observer} from "mobx-react";
 import $ from "jquery";
 import {SERVER_ADDR} from "../misc/const";
 
+@observer
 class StaffDispenser extends React.Component<{}, {}> {
     myState: {
         spinning: boolean;
@@ -64,7 +66,6 @@ class StaffDispenser extends React.Component<{}, {}> {
 
     onClick = () => {
         this.myState.spinning = true;
-        this.myState.hasResult = false;
         this.myState.hasSuccess = false;
         this.myState.hasError = false;
         $.ajax({
@@ -86,7 +87,7 @@ class StaffDispenser extends React.Component<{}, {}> {
                     this.myState.message = "Operation completed successfully!";
                 } else {
                     this.myState.hasError = true;
-                    this.myState.message = "Operation failed: " + data.message!;
+                    this.myState.message = "Operation failed: " + data.error_message!;
                 }
             },
             error: () => {
@@ -109,6 +110,7 @@ class StaffDispenser extends React.Component<{}, {}> {
                     margin: "30px auto 0",
                     maxWidth: "600px",
                     height: "100%",
+                    padding: "30px"
                 }}>
                     <Space direction="vertical">
                         <Spin spinning={this.myState.spinning}>
@@ -139,8 +141,8 @@ class StaffDispenser extends React.Component<{}, {}> {
                             <Spin spinning={this.myState.spinning}>
                                 <Card>
                                     <Space direction="vertical">
-                                        <Descriptions>
-                                            <Descriptions.Item label="Drug">{this.myState.drug}</Descriptions.Item>
+                                        <Descriptions bordered>
+                                            <Descriptions.Item label="Drug">{this.myState.drug || "(Empty)"}</Descriptions.Item>
                                         </Descriptions>
                                         <Button type="primary" onClick={this.onClick}>Finish</Button>
                                     </Space>
@@ -150,7 +152,7 @@ class StaffDispenser extends React.Component<{}, {}> {
                         {this.myState.hasSuccess ? (
                             <Alert
                                 message="Operation Succeeded"
-                                description="Detailed description and advice about successful copywriting."
+                                description={this.myState.message}
                                 type="success"
                                 showIcon
                             />
@@ -158,7 +160,7 @@ class StaffDispenser extends React.Component<{}, {}> {
                         {this.myState.hasError ? (
                             <Alert
                                 message="Operation Failed"
-                                description="Detailed description and advice about successful copywriting."
+                                description={this.myState.message}
                                 type="error"
                                 showIcon
                             />

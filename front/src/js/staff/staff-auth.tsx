@@ -38,8 +38,11 @@ class StaffLogin extends React.Component<RouteComponentProps, {}> {
             },
             success: data => {
                 if (data.is_login!) {
-                    // TODO: fix this
-                    this.props.history.push("/");
+                    if (data.role! === 'front') {
+                        this.props.history.push('/frontDesk');
+                    } else if (data.role! === 'dispenser') {
+                        this.props.history.push('/dispenser');
+                    }
                 }
             }
         });
@@ -66,7 +69,7 @@ class StaffLogin extends React.Component<RouteComponentProps, {}> {
                     formState.hasError = true;
                     formState.message = "Login Failed: " + data.error_message!;
                 } else {
-                    if (data.role! === 'front-desk') {
+                    if (data.role! === 'front') {
                         this.props.history.push('/frontDesk');
                     } else if (data.role! === 'dispenser') {
                         this.props.history.push('/dispenser');
