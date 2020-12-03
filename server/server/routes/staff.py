@@ -97,10 +97,16 @@ def staff_dipenser_check_prescription():
     if not patient:
         return jsonify(success=False,
                        error_message='No such patient')
-    else:
-        cur_appoint = patient.current_appointment()
-        return jsonify(success=True,
-                       drug=cur_appoint.drug)
+    cur_appoint = patient.current_appointment()
+    if not cur_appoint:
+        return jsonify(success=False,
+                       drug="No appointment going")
+    if cur_appoint.stage != 'Get Drug':
+        if not cur_appoint:
+            return jsonify(success=False,
+                           drug="No drug to be dipensed")
+    return jsonify(success=True,
+                   drug=cur_appoint.drug)
 
 
 @app.route("/staff/dispenser/finishAppointment", methods=['POST'])
