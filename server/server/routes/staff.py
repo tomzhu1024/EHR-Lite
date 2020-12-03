@@ -103,9 +103,8 @@ def staff_dipenser_check_prescription():
         return jsonify(success=False,
                        error_message="No appointment going")
     if cur_appoint.stage != 'Get Drug':
-        if not cur_appoint:
-            return jsonify(success=False,
-                           error_message="No drug to be dipensed")
+        return jsonify(success=False,
+                       error_message="Not in dispense stage")
     return jsonify(success=True,
                    drug=cur_appoint.drug)
 
