@@ -123,7 +123,7 @@ def staff_dispenser_finish_appointment():
         return jsonify(success=False,
                        error_message='No such patient')
     try:
-        patient.current_appointment.finish()
+        patient.current_appointment().finish()
     except Exception as e:
         return jsonify(success=False,
                        error_message=str(e))
