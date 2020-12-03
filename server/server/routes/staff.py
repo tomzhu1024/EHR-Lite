@@ -76,10 +76,10 @@ def staff_front_checkin():
         cur_appoint = patient.current_appointment()
         if not cur_appoint:
             return jsonify(success=False,
-                           error_message='Patient has no schedule today')
+                           error_message='Patient has no schedule')
         if cur_appoint.stage != 'Upcoming' or cur_appoint.schedule_date != datetime.date.today():
             return jsonify(success=False,
-                           error_message='Patient has no schedule today')
+                           error_message="Patient doesn't meet requiremtent of check in")
         cur_appoint.stage = 'In Queue'
         cur_appoint.check_in_time = datetime.datetime.now()
         db.session.commit()
