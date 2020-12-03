@@ -28,5 +28,6 @@ def isLogin():
             user_id = user_id.lstrip('Staff')
             staff = Staff.query.get(int(user_id))
             return jsonify(is_login=True,
-                           name=staff.name)
+                           name=staff.name,
+                           role=staff.role)
     return jsonify(is_login=False)
