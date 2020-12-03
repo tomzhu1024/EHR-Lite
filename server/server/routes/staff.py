@@ -56,7 +56,8 @@ def staff_front_search_patient():
                        error_message='No Appointment scheduled')
     return jsonify(success=True, name=patient.name, doctor_name=cur_appoint.doctor.name,
                    department=cur_appoint.doctor.department, date=str(cur_appoint.schedule_date),
-                   start_time=str(cur_appoint.schedule.start_time), end_time=str(cur_appoint.schedule.end_time))
+                   start_time=str(cur_appoint.schedule.start_time), end_time=str(cur_appoint.schedule.end_time),
+                   stage=cur_appoint.stage)
 
 
 @app.route("/staff/front/check-in", methods=['POST'])
