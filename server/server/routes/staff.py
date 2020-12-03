@@ -101,11 +101,11 @@ def staff_dipenser_check_prescription():
     cur_appoint = patient.current_appointment()
     if not cur_appoint:
         return jsonify(success=False,
-                       drug="No appointment going")
+                       error_message="No appointment going")
     if cur_appoint.stage != 'Get Drug':
         if not cur_appoint:
             return jsonify(success=False,
-                           drug="No drug to be dipensed")
+                           error_message="No drug to be dipensed")
     return jsonify(success=True,
                    drug=cur_appoint.drug)
 
@@ -114,17 +114,16 @@ def staff_dipenser_check_prescription():
 @login_required
 def staff_dispenser_finish_appointment():
     try:
-        appointment_id = request.form.get('appointment_id')
+        patient_id = int(request.form['id'])
     except:
         return jsonify(success=False,
                        error_message='Invalid input')
-    appoint = Appointment.query.filter_by(appointment_id=appointment_id).first()
-
-    if not appoint:
+    patient = Patient.query.filter_by(patient_id=patient_id).first()
+    if not patient:
         return jsonify(success=False,
-                       error_message='No such appointment')
+                       error_message='No such patient')
     try:
-        appoint.finish()
+        patient.current_appointment.finish()
     except Exception as e:
         return jsonify(success=False,
                        error_message=str(e))
