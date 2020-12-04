@@ -1,4 +1,4 @@
-const SERVER_ADDR = "http://localhost:5000";
+const SERVER_ADDR = "https://dev.tomzhu.site/API";
 
 export {
     SERVER_ADDR

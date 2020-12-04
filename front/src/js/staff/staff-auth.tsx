@@ -50,6 +50,8 @@ class StaffLogin extends React.Component<RouteComponentProps, {}> {
 
     onFinish = (fieldsValue: any) => {
         formState.spinning = true;
+        formState.hasError = false;
+        formState.hasSuccess = false;
         $.ajax({
             type: "POST",
             url: SERVER_ADDR + "/staff/login",

@@ -1,4 +1,4 @@
-import React, {CSSProperties} from "react";
+import React from "react";
 import {RouteComponentProps} from "react-router-dom";
 import {Helmet} from "react-helmet";
 import {Breadcrumb, Card, Carousel, notification, Space, Spin, Steps} from "antd";
@@ -6,18 +6,13 @@ import {HomeOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
+import Pic1 from "../../assets/pic1.jpg";
+import Pic2 from "../../assets/pic2.jpg";
+import Pic3 from "../../assets/pic3.jpg";
+import Pic4 from "../../assets/pic4.jpg";
 import {SERVER_ADDR} from "../misc/const";
 
 const {Step} = Steps;
-
-const contentStyle: CSSProperties = {
-    height: 'calc(100vh - 370px)',
-    width: '100%',
-    color: '#fff',
-    lineHeight: '20px',
-    textAlign: 'center',
-    background: '#364d79'
-};
 
 @observer
 class PatientHome extends React.Component<RouteComponentProps, {}> {
@@ -82,30 +77,66 @@ class PatientHome extends React.Component<RouteComponentProps, {}> {
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <Space direction="vertical" style={{width: "100%", marginTop: "20px"}}>
-                    <Carousel autoplay autoplaySpeed={5000} effect="fade">
+                    <Carousel autoplay autoplaySpeed={3000} effect="fade">
                         <div>
-                            <img
-                                style={contentStyle}
-                                src={"https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg"}
-                            />
+                            <div style={{
+                                height: 'calc(100vh - 375px)',
+                                width: '100%',
+                            }}>
+                                <img
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                    }}
+                                    src={Pic4}
+                                />
+                            </div>
                         </div>
                         <div>
-                            <img
-                                style={contentStyle}
-                                src={"https://ichef.bbci.co.uk/news/800/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"}
-                            />
+                            <div style={{
+                                height: 'calc(100vh - 375px)',
+                                width: '100%',
+                            }}>
+                                <img
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                    }}
+                                    src={Pic3}
+                                />
+                            </div>
                         </div>
                         <div>
-                            <img
-                                style={contentStyle}
-                                src={"https://asia.olympus-imaging.com/content/000107507.jpg"}
-                            />
+                            <div style={{
+                                height: 'calc(100vh - 375px)',
+                                width: '100%',
+                            }}>
+                                <img
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                    }}
+                                    src={Pic2}
+                                />
+                            </div>
                         </div>
                         <div>
-                            <img
-                                style={contentStyle}
-                                src={"https://cdn.pixabay.com/photo/2020/11/24/12/23/flowering-dogwood-5772385_1280.jpg"}
-                            />
+                            <div style={{
+                                height: 'calc(100vh - 375px)',
+                                width: '100%',
+                            }}>
+                                <img
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                    }}
+                                    src={Pic1}
+                                />
+                            </div>
                         </div>
                     </Carousel>
                     <Spin spinning={this.myState.spinning}>

@@ -1,5 +1,7 @@
-@primary-color: #09d0db; // #1890ff; // 全局主色
-@link-color: #09d0db; // #1890ff; // 链接色
+@theme-color: #d07232;
+
+@primary-color: @theme-color; // #1890ff; // 全局主色
+@link-color: @theme-color; // #1890ff; // 链接色
 @success-color: #52c41a; // 成功色
 @warning-color: #faad14; // 警告色
 @error-color: #f5222d; // 错误色
@@ -14,5 +16,5 @@
 0 9px 28px 8px rgba(0, 0, 0, 0.05); // 浮层阴影
 
 .ant-layout-header, .ant-layout-header .ant-menu {
-  background-color: #09d0db !important;
+  background-color: @theme-color !important;
 }
