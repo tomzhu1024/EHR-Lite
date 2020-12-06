@@ -1,10 +1,11 @@
 from flask import jsonify, session, request
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from hashlib import md5
 import datetime
 
 from server import app, db
 from server.tables import Staff, Patient, Appointment
+from server.service.chat import StaffChatService
 
 
 @app.route('/staff/login', methods=['POST'])
@@ -19,15 +20,18 @@ def staff_login():
     if not staff:
         return jsonify(success=False,
                        error_message='No such Staff')
-    else:
-        if staff.password != md5(password.encode()).hexdigest():
-            return jsonify(success=False,
-                           error_message='Wrong password')
-        else:
-            login_user(staff)
-            session['staff_id'] = staff.staff_id
-            return jsonify(success=True,
-                           role=staff.role)
+    if staff.password != md5(password.encode()).hexdigest():
+        return jsonify(success=False,
+                       error_message='Wrong password')
+    login_user(staff)
+    if staff.role == 'front':
+        staff.online = True
+        db.session.commit()
+        chat = StaffChatService(staff)
+        staff.chat = chat
+
+    return jsonify(success=True,
+                   role=staff.role)
 
 
 @app.route("/staff/logout", methods=['GET'])
@@ -127,3 +131,10 @@ def staff_dispenser_finish_appointment():
         return jsonify(success=False,
                        error_message=str(e))
     return jsonify(success=True)
+
+
+@app.route("/staff/chat", methods=['GET'])
+@login_required
+def patient_chat():
+    chat_service = current_user.chat
+    return chat_service.history

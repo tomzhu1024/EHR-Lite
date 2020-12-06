@@ -19,6 +19,18 @@ class Patient(db.Model, UserMixin):
     def get_id(self):
         return 'Patient' + str(self.patient_id)
 
+    @property
+    def chat(self):
+        return self.chat_
+
+    @chat.setter
+    def set_chat(self, chat_service):
+        self.chat_ = chat_service
+
+    @chat.getter
+    def get_chat(self):
+        return self.chat_
+
     def new_record(self):
         for r in self.records:
             if r.stage == "In Progress":
@@ -204,6 +216,20 @@ class Staff(db.Model, UserMixin):
     name = db.Column(db.String(10), unique=True)
     password = db.Column(db.String(30))
     role = db.Column(db.String(20))
+    online = db.Column(db.Boolean)
 
     def get_id(self):
         return 'Staff' + str(self.staff_id)
+
+    @property
+    def chat(self):
+        return self.chat_
+
+    @chat.setter
+    def set_chat(self, chat_service):
+        self.chat_ = chat_service
+
+    @chat.getter
+    def get_chat(self):
+        return self.chat_
+
