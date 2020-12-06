@@ -41,12 +41,15 @@ class Patient(db.Model, UserMixin):
         return new_r
 
     def new_appointment(self, record_id, schedule_id, schedule_date):
+        if self.current_appointment():
+            raise Exception("Another appointment going on")
         r = Record.query.filter_by(record_id=record_id, patient_id=self.patient_id).first()
         s = Schedule.query.filter_by(schedule_id=schedule_id).first()
         if not r or not s or s.weekday != datetime.date.weekday(schedule_date):
             raise Exception("Appoint info don't match")
         if not s.is_available_on(schedule_date):
             raise Exception("Appointment full")
+
         new_appoint = Appointment(record_id=record_id, doctor_id=s.doctor_id, schedule_id=schedule_id,
                                   schedule_date=schedule_date, stage='Upcoming')
         db.session.add(new_appoint)

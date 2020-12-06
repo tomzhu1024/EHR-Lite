@@ -4,7 +4,7 @@ from hashlib import md5
 import datetime
 
 from server import app, db
-from server.tables import Staff, Patient, Appointment
+from server.model import Staff, Patient, Appointment
 from server.service.chat import StaffChatService
 
 
@@ -135,6 +135,6 @@ def staff_dispenser_finish_appointment():
 
 @app.route("/staff/chat", methods=['GET'])
 @login_required
-def patient_chat():
+def staff_chat():
     chat_service = current_user.chat
     return chat_service.history

@@ -22,7 +22,7 @@ from server.routes.patient import *
 from server.routes.doctor import *
 from server.routes.staff import *
 from server.routes.admin import *
-from server.tables import Patient, Doctor, Admin, Staff
+from server.model import Patient, Doctor, Admin, Staff
 
 
 @loginManager.user_loader

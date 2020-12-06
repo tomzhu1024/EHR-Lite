@@ -5,7 +5,7 @@ from flask import request, jsonify, session
 from flask_login import logout_user, login_required, current_user, login_user
 
 from server import app, db
-from server.tables import Patient, Doctor, Record, Schedule
+from server.model import Patient, Doctor, Record
 from server.service.chat import PatientChatService
 
 

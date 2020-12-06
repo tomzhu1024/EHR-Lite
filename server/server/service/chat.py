@@ -2,7 +2,7 @@ import random
 from flask_socketio import emit
 
 from server import socketio
-from server.tables import Staff
+from server.model import Staff
 
 
 class ChatService:
