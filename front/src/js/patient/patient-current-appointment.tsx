@@ -1,12 +1,13 @@
 import React from "react";
 import {RouteComponentProps} from "react-router-dom";
 import {Helmet} from "react-helmet";
-import {Breadcrumb, Button, Card, notification, Result, Space, Spin} from "antd";
+import {Breadcrumb, Button, Card, Descriptions, notification, Result, Space, Spin} from "antd";
 import {HomeOutlined, ScheduleOutlined} from "@ant-design/icons";
 import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
 import {SERVER_ADDR} from "../misc/const";
+import "../../css/patient/patient-current-appointment.less";
 
 @observer
 class FigureIcon extends React.Component<{ figure: number }, {}> {
@@ -173,7 +174,7 @@ class PatientCurrentAppointment extends React.Component<RouteComponentProps, {}>
         return (
             <>
                 <Helmet>
-                    <title>Queue Status - EHR Lite</title>
+                    <title>Current Appointment - EHR Lite</title>
                 </Helmet>
                 <Breadcrumb>
                     <Breadcrumb.Item href="#/">
@@ -238,35 +239,13 @@ class PatientCurrentAppointment extends React.Component<RouteComponentProps, {}>
                             </Card>
                         ) : null}
                         {this.myState.stage === 4 ? (
-                            <Card
-                                style={{
-                                    backgroundColor: "#ececec"
-                                }}
-                            >
-                                <Card
-                                    type="inner"
-                                    title="Diagnosis"
-                                    style={{
-                                        width: "100%",
-                                        maxWidth: "400px",
-                                        minHeight: "200px",
-                                        margin: "0 auto",
-                                    }}
-                                >
-                                    {this.myState.diagnosis || "(Empty)"}
-                                </Card>
-                                <Card
-                                    title="Drug"
-                                    type='inner'
-                                    style={{
-                                        margin: "20px auto 0",
-                                        width: "100%",
-                                        maxWidth: "400px",
-                                        minHeight: "200px",
-                                    }}
-                                >
-                                    {this.myState.drug || "(Empty)"}
-                                </Card>
+                            <Card>
+                                <Descriptions title="Doctor Feedback" bordered>
+                                    <Descriptions.Item label="Diagnosis"
+                                                       span={24}>{this.myState.diagnosis || "(Empty)"}</Descriptions.Item>
+                                    <Descriptions.Item label="Drug"
+                                                       span={24}>{this.myState.drug || "(Empty)"}</Descriptions.Item>
+                                </Descriptions>
                             </Card>
                         ) : null}
                     </Spin>

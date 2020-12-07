@@ -5,7 +5,6 @@ import {Route, RouteComponentProps} from "react-router-dom";
 import {History} from "history";
 import {Layout, Menu, notification} from "antd";
 import {HomeOutlined, LogoutOutlined, UserOutlined} from "@ant-design/icons";
-import {Scrollbar} from "react-scrollbars-custom";
 import $ from "jquery";
 
 import {SERVER_ADDR} from "../misc/const";
@@ -17,7 +16,7 @@ const {SubMenu} = Menu;
 const {Header, Footer, Sider, Content} = Layout;
 
 @observer
-class Navbar extends React.Component<{ history: History }, {}> {
+class Navbar extends React.Component<{}, {}> {
     myState: { displayName: string } & IObservableObject = observable({
         displayName: ""
     });
@@ -34,7 +33,7 @@ class Navbar extends React.Component<{ history: History }, {}> {
                 if (data.is_login!) {
                     this.myState.displayName = data.name!;
                 } else {
-                    this.props.history.push("/login");
+                    window.location.href = "/";
                 }
             },
             error: () => {
@@ -69,7 +68,7 @@ class Navbar extends React.Component<{ history: History }, {}> {
                                     withCredentials: true
                                 },
                                 success: () => {
-                                    this.props.history.push("/login");
+                                    window.location.href = "/";
                                 }
                             });
                         }}>
@@ -121,7 +120,7 @@ class SideMenu extends React.Component<{ history: History }, {}> {
                                         withCredentials: true
                                     },
                                     success: () => {
-                                        this.props.history.push("/login");
+                                        window.location.href = "/";
                                     }
                                 });
                             }}
@@ -141,7 +140,7 @@ class DoctorSkeleton extends React.Component<RouteComponentProps, {}> {
         return (
             <Layout className={Style.fixedLayout}>
                 <Header>
-                    <Navbar history={this.props.history}/>
+                    <Navbar/>
                 </Header>
                 <Layout>
                     <Content>

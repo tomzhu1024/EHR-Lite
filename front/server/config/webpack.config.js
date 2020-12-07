@@ -12,6 +12,7 @@ module.exports = {
         patient: resolve(PROJECT_ROOT, 'src/js/patient/patient-app.tsx'),
         doctor: resolve(PROJECT_ROOT, 'src/js/doctor/doctor-app.tsx'),
         staff: resolve(PROJECT_ROOT, 'src/js/staff/staff-app.tsx'),
+        startPage: resolve(PROJECT_ROOT, 'src/js/start-page.tsx'),
     },
     output: {
         path: resolve(PROJECT_ROOT, 'build'),
@@ -113,6 +114,14 @@ module.exports = {
             template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
             filename: 'staff.html',
             chunks: ['staff'],
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
+            filename: 'index.html',
+            chunks: ['startPage'],
             minify: {
                 collapseWhitespace: true
             }

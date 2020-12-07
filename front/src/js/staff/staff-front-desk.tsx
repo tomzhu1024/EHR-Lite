@@ -6,6 +6,7 @@ import {IObservableObject, observable} from "mobx";
 import {observer} from "mobx-react";
 import $ from "jquery";
 import {SERVER_ADDR} from "../misc/const";
+import Style from "../../css/staff/staff-shared.module.less";
 
 @observer
 class StaffFrontDesk extends React.Component<{}, {}> {
@@ -119,16 +120,13 @@ class StaffFrontDesk extends React.Component<{}, {}> {
         return (
             <>
                 <Helmet>
-                    <title>Staff (Front-desk) - EHR Lite</title>
+                    <title>Front Desk - EHR Lite</title>
                 </Helmet>
-                <div style={{
-                    margin: "30px auto 0",
-                    height: "100%",
-                    padding: "30px"
-                }}>
-                    <Space direction="vertical" style={{width: "100%"}}>
-                        <Spin spinning={this.myState.spinning} style={{width: "100%"}}>
-                            <Card style={{width: "100%"}}>
+                <div className={Style.box}>
+                    <Space direction="vertical">
+                        <Spin spinning={this.myState.spinning}>
+                            <Card>
+                                <h1 className={Style.header}>Check In</h1>
                                 <Form layout="inline" onFinish={this.onFinish}>
                                     <Form.Item
                                         label="Patient ID"
