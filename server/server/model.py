@@ -19,6 +19,18 @@ class Patient(db.Model, UserMixin):
     def get_id(self):
         return 'Patient' + str(self.patient_id)
 
+    @property
+    def chat(self):
+        return self.chat_
+
+    @chat.setter
+    def set_chat(self, chat_service):
+        self.chat_ = chat_service
+
+    @chat.getter
+    def get_chat(self):
+        return self.chat_
+
     def new_record(self):
         for r in self.records:
             if r.stage == "In Progress":
@@ -29,12 +41,15 @@ class Patient(db.Model, UserMixin):
         return new_r
 
     def new_appointment(self, record_id, schedule_id, schedule_date):
+        if self.current_appointment():
+            raise Exception("Another appointment going on")
         r = Record.query.filter_by(record_id=record_id, patient_id=self.patient_id).first()
         s = Schedule.query.filter_by(schedule_id=schedule_id).first()
         if not r or not s or s.weekday != datetime.date.weekday(schedule_date):
             raise Exception("Appoint info don't match")
         if not s.is_available_on(schedule_date):
             raise Exception("Appointment full")
+
         new_appoint = Appointment(record_id=record_id, doctor_id=s.doctor_id, schedule_id=schedule_id,
                                   schedule_date=schedule_date, stage='Upcoming')
         db.session.add(new_appoint)
@@ -204,6 +219,20 @@ class Staff(db.Model, UserMixin):
     name = db.Column(db.String(10), unique=True)
     password = db.Column(db.String(30))
     role = db.Column(db.String(20))
+    online = db.Column(db.Boolean)
 
     def get_id(self):
         return 'Staff' + str(self.staff_id)
+
+    @property
+    def chat(self):
+        return self.chat_
+
+    @chat.setter
+    def set_chat(self, chat_service):
+        self.chat_ = chat_service
+
+    @chat.getter
+    def get_chat(self):
+        return self.chat_
+

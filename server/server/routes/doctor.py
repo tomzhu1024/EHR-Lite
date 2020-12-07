@@ -4,7 +4,7 @@ from hashlib import md5
 import datetime
 
 from server import app, db
-from server.tables import Doctor, Appointment, Patient, Record
+from server.model import Doctor, Appointment, Patient, Record
 
 
 @app.route('/doctor/login', methods=['POST'])

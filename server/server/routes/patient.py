@@ -5,7 +5,8 @@ from flask import request, jsonify, session
 from flask_login import logout_user, login_required, current_user, login_user
 
 from server import app, db
-from server.tables import Patient, Doctor, Record, Schedule
+from server.model import Patient, Doctor, Record
+from server.service.chat import PatientChatService
 
 
 @app.route("/patient/login", methods=['POST'])
@@ -20,19 +21,21 @@ def patient_login():
     if not patient:
         return jsonify(success=False,
                        error_message='No such patient')
-    else:
-        if patient.password != md5(password.encode()).hexdigest():
-            return jsonify(success=False,
-                           error_message='Wrong password')
-        else:
-            login_user(patient)
-            current_user.patient_id = patient.patient_id
-            return jsonify(success=True)
+
+    if patient.password != md5(password.encode()).hexdigest():
+        return jsonify(success=False,
+                       error_message='Wrong password')
+
+    login_user(patient)
+    chat = PatientChatService()
+    patient.chat = chat
+    return jsonify(success=True)
 
 
 @app.route("/patient/logout", methods=['GET'])
 @login_required
 def patient_logout():
+    del current_user.chat
     logout_user()
     session.clear()
 
@@ -184,8 +187,6 @@ def patient_current_appointment():
                        date=str(appoint.schedule_date))
 
 
-
-
 @app.route("/patient/checkStage", methods=['GET'])
 @login_required
 def patient_get_stage():
@@ -197,3 +198,19 @@ def patient_get_stage():
         return jsonify(success=True,
                        stage=appoint.stage)
 
+
+@app.route("/patient/chat", methods=['GET'])
+@login_required
+def patient_chat():
+    chat_service = current_user.chat
+    if not chat_service.is_active:
+        res = chat_service.start()
+        if res:
+            return jsonify(success=True,
+                           data=[])
+        else:
+            return jsonify(success=False,
+                           error_message='No staff available right now')
+    else:
+        return jsonify(success=True,
+                       data=chat_service.history)
