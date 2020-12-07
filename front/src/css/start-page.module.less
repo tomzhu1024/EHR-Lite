@@ -1,0 +1,149 @@
+@borderRadius: 5px;
+@background: #e7e7e7;
+
+html, body {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  background-color: @background;
+}
+
+h1 {
+  font-family: "Squada One", sans-serif;
+  font-size: 28px;
+}
+
+:global .ant-layout-content, :global .ant-layout-sider {
+  background: @background;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: @background;
+  padding: 0 25px 100px;
+
+  :global .ant-tabs-nav {
+    margin-bottom: 0;
+  }
+
+  :global .ant-tabs-nav::before {
+    border-bottom: none !important;
+  }
+
+  :global .ant-tabs-content-holder {
+    background-color: #ffffff;
+    padding: 20px;
+  }
+
+  :global .ant-tabs-tab {
+    width: 75px;
+    padding: 8px !important;
+
+    .ant-tabs-tab-btn, .ant-tabs-tab-btn:active, .ant-tabs-tab-btn:focus {
+      color: #ffffff !important;
+      text-align: center;
+      width: 100%;
+    }
+
+    &:nth-child(1) {
+      background-color: #6a3b77;
+      border: #6a3b77 solid 2px;
+      border-bottom: none !important;
+      border-top-left-radius: @borderRadius !important;
+      border-top-right-radius: @borderRadius !important;
+    }
+
+    &:nth-child(2) {
+      background-color: #21677e;
+      border: #21677e solid 2px;
+      border-bottom: none !important;
+      border-top-left-radius: @borderRadius !important;
+      border-top-right-radius: @borderRadius !important;
+    }
+
+    &:nth-child(3) {
+      background-color: #d07232;
+      border: #d07232 solid 2px;
+      border-bottom: none !important;
+      border-top-left-radius: @borderRadius !important;
+      border-top-right-radius: @borderRadius !important;
+    }
+  }
+
+  :global .ant-tabs-tab-active {
+    background-color: #ffffff !important;
+
+    .ant-tabs-tab-btn {
+      color: #ffffff;
+    }
+
+    border: #ffffff solid 2px !important;
+    border-bottom: none !important;
+    border-top-left-radius: @borderRadius !important;
+    border-top-right-radius: @borderRadius !important;
+
+    &:nth-child(1) {
+      background-color: #6a3b77;
+    }
+
+    &:nth-child(2) {
+      background-color: #21677e;
+    }
+
+    &:nth-child(3) {
+      background-color: #d07232;
+    }
+  }
+
+  :global .ant-space {
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  :global .ant-divider-horizontal.ant-divider-with-text {
+    color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: @background;
+  padding: 0 25px 100px;
+
+  :global .ant-picker {
+    width: 100%;
+  }
+
+  :global .ant-card-body {
+    padding: 24px;
+  }
+}
+
+.rightAligned {
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoBox {
+  background-color: #ffffff;
+  margin: 50px auto;
+  width: 100%;
+  max-width: 125px;
+
+  img {
+    width: 100%;
+    object-fit: contain;
+  }
+}

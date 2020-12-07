@@ -6,7 +6,7 @@ from flask_login import logout_user, login_required, login_user, current_user
 
 
 from server import app, db
-from server.tables import Doctor, Admin, Staff
+from server.model import Doctor, Admin, Staff
 
 
 @app.route("/admin/login", methods=['POST'])

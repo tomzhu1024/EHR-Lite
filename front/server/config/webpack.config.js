@@ -9,7 +9,10 @@ const {IS_DEV, PROJECT_ROOT} = require('./env');
 
 module.exports = {
     entry: {
-        app: resolve(PROJECT_ROOT, 'src/js/app.tsx')
+        patient: resolve(PROJECT_ROOT, 'src/js/patient/patient-app.tsx'),
+        doctor: resolve(PROJECT_ROOT, 'src/js/doctor/doctor-app.tsx'),
+        staff: resolve(PROJECT_ROOT, 'src/js/staff/staff-app.tsx'),
+        startPage: resolve(PROJECT_ROOT, 'src/js/start-page.tsx'),
     },
     output: {
         path: resolve(PROJECT_ROOT, 'build'),
@@ -21,12 +24,12 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 use: ['babel-loader'],
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.tsx?$/,
                 use: ['awesome-typescript-loader'],
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.(png|jpg|gif|woff2?)$/,
@@ -75,10 +78,6 @@ module.exports = {
                         loader: 'less-loader',
                         options: {
                             lessOptions: {
-                                modifyVars: {
-                                    'primary-color': '#09d0db',
-                                    'link-color': '#09d0db',
-                                },
                                 javascriptEnabled: true
                             }
                         }
@@ -88,21 +87,45 @@ module.exports = {
         ]
     },
     plugins: [
-        new WebpackBar({
-            color: IS_DEV ? '#fff300' : '#00fff7',
-        }),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
+        }),
+        new WebpackBar({
+            color: IS_DEV ? '#fff300' : '#00fff7',
         }),
         new FriendlyErrorsPlugin(),
         new HtmlWebpackPlugin({
             template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
-            filename: 'index.html',
-            chunks: ['app'],
+            filename: 'patient.html',
+            chunks: ['patient'],
             minify: {
                 collapseWhitespace: true
             }
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
+            filename: 'doctor.html',
+            chunks: ['doctor'],
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
+            filename: 'staff.html',
+            chunks: ['staff'],
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: resolve(PROJECT_ROOT, 'src/html/template.ejs'),
+            filename: 'index.html',
+            chunks: ['startPage'],
+            minify: {
+                collapseWhitespace: true
+            }
+        }),
     ],
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],

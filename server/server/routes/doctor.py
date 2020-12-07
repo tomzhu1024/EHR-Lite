@@ -4,7 +4,7 @@ from hashlib import md5
 import datetime
 
 from server import app, db
-from server.tables import Doctor, Appointment, Patient, Record
+from server.model import Doctor, Appointment, Patient, Record
 
 
 @app.route('/doctor/login', methods=['POST'])
@@ -48,6 +48,8 @@ def doctor_next_appointment():
                        error_message="No Patient in queue")
     else:
         try:
+            if appointment.stage != 'In Queue':
+                raise Exception
             appointment.stage = 'In Progress'
             db.session.commit()
         except:
@@ -74,14 +76,29 @@ def doctor_submit_diagnosis():
     if not appointment:
         return jsonify(success=False,
                        error_message='Wrong appointment ID')
-    try:
-        appointment.diagnosis = diagnosis
-        appointment.drug = drug
-        db.session.commit()
-    except:
-        return jsonify(success=False,
-                       error_messaga='Internal Error')
-    return jsonify(success=True)
+    if drug:
+        print()
+        try:
+            appointment.diagnosis = diagnosis
+            appointment.stage = 'Get Drug'
+            appointment.drug = drug
+            db.session.commit()
+            return jsonify(success=True)
+        except Exception as e:
+            print(e)
+            return jsonify(success=False,
+                           error_messaga='Internal Error')
+    else:
+        try:
+            appointment.diagnosis = diagnosis
+            appointment.drug = drug
+            db.session.commit()
+            appointment.finish()
+        except Exception as e:
+            print(e)
+            return jsonify(success=False,
+                           error_messaga='Internal Error')
+        return jsonify(success=True)
 
 
 @app.route("/doctor/getQueue", methods=['GET'])
@@ -122,7 +139,31 @@ def doctor_get_record_detail():
     if not record:
         return jsonify(success=False,
                        error_message='No such record')
-    data = [{'date': appoint.schedule_date, 'doctor_name': appoint.doctor.name, 'department': appoint.doctor.department,
+    data = [{'date': str(appoint.schedule_date), 'doctor_name': appoint.doctor.name, 'department': appoint.doctor.department,
              'diagnosis': appoint.diagnosis, 'drug': appoint.drug} for appoint in record.appointments]
     return jsonify(success=True,
                    data=data)
+
+
+@app.route("/doctor/finishAppointment", methods=['POST'])
+@login_required
+def doctor_finish_appointment():
+    try:
+        appointment_id = request.form.get('appointment_id')
+    except:
+        return jsonify(success=False,
+                       error_message='Invalid input')
+    appoint = Appointment.query.filter_by(appointment_id=appointment_id).first()
+
+    if not appoint:
+        return jsonify(success=False,
+                       error_message='No such appointment')
+    if appoint.doctor_id != current_user.doctor_id:
+        return jsonify(success=False,
+                       error_message='Not your Appointment')
+    try:
+        appoint.finish()
+    except Exception as e:
+        return jsonify(success=False,
+                       error_message=str(e))
+    return jsonify(success=True)

@@ -1,0 +1,44 @@
+.navBar {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    width: 75px;
+  }
+
+  :global .ant-menu {
+    text-align: right;
+    float: right;
+
+    .ant-menu-item {
+      margin: 0;
+    }
+  }
+}
+
+.fixedLayout {
+  background-color: blue;
+
+  :global .ant-layout-header {
+    height: 64px;
+  }
+
+  :global .ant-layout-footer {
+    height: 64px;
+    padding: 0;
+    line-height: 64px;
+    color: #757575;
+  }
+
+  :global .ant-layout {
+    height: calc(100vh - 128px);
+    background-color: #ffffff;
+
+    .ant-layout-sider {
+      background-color: #ffffff;
+    }
+  }
+}
