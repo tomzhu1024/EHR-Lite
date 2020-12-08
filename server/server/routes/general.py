@@ -13,21 +13,24 @@ def isLogin():
             user_id = user_id.lstrip('Patient')
             patient = Patient.query.get(int(user_id))
             return jsonify(is_login=True,
-                           name=patient.name)
+                           name=patient.name,
+                           type='patient')
         elif user_id.startswith('Doctor'):
             user_id = user_id.lstrip('Doctor')
             doctor = Doctor.query.get(int(user_id))
             return jsonify(is_login=True,
-                           name=doctor.name)
+                           name=doctor.name,
+                           type='doctor')
         elif user_id.startswith('Admin'):
             user_id = user_id.lstrip('Admin')
             admin = Admin.query.get(int(user_id))
             return jsonify(is_login=True,
-                           name=admin.name)
+                           name=admin.name,
+                           type='admin')
         elif user_id.startswith('Staff'):
             user_id = user_id.lstrip('Staff')
             staff = Staff.query.get(int(user_id))
             return jsonify(is_login=True,
                            name=staff.name,
-                           role=staff.role)
+                           type=staff.role)
     return jsonify(is_login=False)
