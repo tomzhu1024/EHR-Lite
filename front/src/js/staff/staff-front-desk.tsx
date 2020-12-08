@@ -154,17 +154,17 @@ class StaffFrontDesk extends React.Component<{}, {}> {
                                 <Card>
                                     <Space direction="vertical">
                                         <Descriptions title="Patient Info" bordered>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Doctor Name">{this.myState.doctorName}</Descriptions.Item>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Department">{this.myState.department}</Descriptions.Item>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Date">{this.myState.date}</Descriptions.Item>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Stage">{this.myState.stage}</Descriptions.Item>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Start Time">{this.myState.startTime}</Descriptions.Item>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="End Time">{this.myState.endTime}</Descriptions.Item>
                                         </Descriptions>
                                         <Button type="primary" onClick={this.onClick}>Check In</Button>

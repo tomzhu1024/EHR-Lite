@@ -14,7 +14,6 @@ class PatientApp extends React.Component<{}, {}> {
         return (
             <div className="app">
                 <Helmet>
-                    <meta charSet="UTF-8"/>
                     <meta name="viewport" content="width=device-width"/>
                     <link rel="shortcut icon" href={FavIcon}/>
                 </Helmet>

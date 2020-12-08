@@ -161,7 +161,7 @@ class StaffSkeleton extends React.Component<RouteComponentProps, {}> {
                     </Content>
                 </Layout>
                 <Footer>
-                    <div style={{textAlign: "center"}}>Staff-side Client - EHR Lite © 2020</div>
+                    <div style={{textAlign: "center"}}>Staff-side Client - EHR Lite (C) 2020</div>
                 </Footer>
             </Layout>
         );

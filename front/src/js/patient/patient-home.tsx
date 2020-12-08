@@ -44,7 +44,7 @@ class PatientHome extends React.Component<RouteComponentProps, {}> {
                         this.myState.currentStep = 2;
                     } else if (data.stage! === "In Progress") {
                         this.myState.currentStep = 3;
-                    } else if (data.stage! === "In Dispense") {
+                    } else if (data.stage! === "Get Drug") {
                         this.myState.currentStep = 4;
                     }
                 } else {

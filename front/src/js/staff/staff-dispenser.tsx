@@ -139,7 +139,7 @@ class StaffDispenser extends React.Component<{}, {}> {
                                 <Card>
                                     <Space direction="vertical">
                                         <Descriptions bordered>
-                                            <Descriptions.Item
+                                            <Descriptions.Item span={24}
                                                 label="Drug">{this.myState.drug || "(Empty)"}</Descriptions.Item>
                                         </Descriptions>
                                         <Button type="primary" onClick={this.onClick}>Finish</Button>

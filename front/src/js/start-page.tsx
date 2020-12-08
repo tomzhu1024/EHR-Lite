@@ -635,7 +635,7 @@ class StartPage extends React.Component<{}, {}> {
                     } else if (data.type! === 'front') {
                         window.location.href = '/staff.html#/frontDesk';
                     } else if (data.type! === 'dispenser') {
-                        window.location.href = '/patient.html#/dispenser';
+                        window.location.href = '/staff.html#/dispenser';
                     }
                 }
             }
@@ -647,7 +647,7 @@ class StartPage extends React.Component<{}, {}> {
         return (
             <>
                 <Helmet>
-                    <meta charSet="UTF-8"/>
+                    <meta charSet="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <link rel="shortcut icon" href={FavIcon}/>
                     <title>EHR-Lite</title>

@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const {IS_DEV, PROJECT_ROOT} = require('./env');
 
@@ -89,6 +90,9 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
+        }),
+        new MomentLocalesPlugin({
+            localesToKeep: ['es-us'],
         }),
         new WebpackBar({
             color: IS_DEV ? '#fff300' : '#00fff7',
