@@ -19,17 +19,15 @@ class Patient(db.Model, UserMixin):
     def get_id(self):
         return 'Patient' + str(self.patient_id)
 
-    @property
-    def chat(self):
-        return self.chat_
-
-    @chat.setter
     def set_chat(self, chat_service):
         self.chat_ = chat_service
 
-    @chat.getter
     def get_chat(self):
         return self.chat_
+
+    def remove_chat(self):
+        del self.chat_
+        self.chat_ = None
 
     def new_record(self):
         for r in self.records:

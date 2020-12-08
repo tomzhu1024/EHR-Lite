@@ -13,8 +13,7 @@ app.config['SECRET_KEY'] = 'JuanWang'
 db = SQLAlchemy(app)
 loginManager = LoginManager()
 loginManager.init_app(app)
-socketio = SocketIO()
-socketio.init_app(app)
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 from server.routes.general import *
 from server.routes.patient import *

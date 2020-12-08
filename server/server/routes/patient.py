@@ -28,14 +28,14 @@ def patient_login():
 
     login_user(patient)
     chat = PatientChatService(patient)
-    patient.chat = chat
+    patient.set_chat(chat)
     return jsonify(success=True)
 
 
 @app.route("/patient/logout", methods=['GET'])
 @login_required
 def patient_logout():
-    del current_user.chat
+    current_user.remove_chat()
     logout_user()
     session.clear()
 
