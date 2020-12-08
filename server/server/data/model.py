@@ -13,24 +13,11 @@ class Patient(db.Model, UserMixin):
     birthday = db.Column(db.Date, nullable=False)
     records = db.relationship('Record', backref='patient')
 
-    def __init__(self):
-        self.chat_ = None
-
     def __repr__(self):
         return self.name
 
     def get_id(self):
         return 'Patient' + str(self.patient_id)
-
-    def set_chat(self, chat_service):
-        self.chat_ = chat_service
-
-    def get_chat(self):
-        return self.chat_
-
-    def remove_chat(self):
-        del self.chat_
-        self.chat_ = None
 
     def new_record(self):
         for r in self.records:

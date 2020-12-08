@@ -27,7 +27,7 @@ def patient_login():
                        error_message='Wrong password')
 
     chat = PatientChatService(patient)
-    patient.chat = chat
+    session['chat'] = chat
     login_user(patient)
 
     return jsonify(success=True)
@@ -36,7 +36,6 @@ def patient_login():
 @app.route("/patient/logout", methods=['GET'])
 @login_required
 def patient_logout():
-    current_user.remove_chat()
     logout_user()
     session.clear()
 
