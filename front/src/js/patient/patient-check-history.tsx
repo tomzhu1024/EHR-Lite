@@ -44,6 +44,7 @@ class PatientCheckHistory extends React.Component<RouteComponentProps, {}> {
                 withCredentials: true
             },
             success: async (data: any) => {
+                this.myState.spinning = false;
                 if (data.success!) {
                     await Promise.all(data.data!.map(async (record: any) => {
                         this.myState.records.push({
@@ -61,7 +62,6 @@ class PatientCheckHistory extends React.Component<RouteComponentProps, {}> {
                                         withCredentials: true
                                     },
                                     success: (data: any) => {
-                                        this.myState.spinning = false;
                                         if (data.success!) {
                                             resolve(
                                                 data.data!.map((appointment: any) => ({

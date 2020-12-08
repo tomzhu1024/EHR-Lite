@@ -63,19 +63,6 @@ class PatientLogin extends React.Component<{ history: History }, {}> {
 
     componentDidMount() {
         patientFormState.hasError = false;
-        $.ajax({
-            type: "GET",
-            url: SERVER_ADDR + "/isLogin",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: data => {
-                if (data.is_login!) {
-                    window.location.href = "/patient.html#/"
-                }
-            }
-        });
     }
 
     onFinish = (fieldsValue: any) => {
@@ -203,19 +190,6 @@ class PatientRegister extends React.Component<{ history: History }, {}> {
 
     componentDidMount() {
         patientFormState.hasError = false;
-        $.ajax({
-            type: "GET",
-            url: SERVER_ADDR + "/isLogin",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: data => {
-                if (data.is_login!) {
-                    window.location.href = "/patient.html#/"
-                }
-            }
-        });
     }
 
     onFinish = (fieldsValue: any) => {
@@ -368,19 +342,6 @@ class DoctorLogin extends React.Component<{ history: History }, {}> {
 
     componentDidMount() {
         doctorFormState.hasError = false;
-        $.ajax({
-            type: "GET",
-            url: SERVER_ADDR + "/isLogin",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: data => {
-                if (data.is_login!) {
-                    window.location.href = "/doctor.html#/"
-                }
-            }
-        });
     }
 
     onFinish = (fieldsValue: any) => {
@@ -502,23 +463,6 @@ class StaffLogin extends React.Component<{ history: History }, {}> {
 
     componentDidMount() {
         staffFormState.hasError = false;
-        $.ajax({
-            type: "GET",
-            url: SERVER_ADDR + "/isLogin",
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
-            success: data => {
-                if (data.is_login!) {
-                    if (data.role! === 'front') {
-                        window.location.href = "/staff.html#/frontDesk"
-                    } else if (data.role! === 'dispenser') {
-                        window.location.href = "/staff.html#/Dispenser"
-                    }
-                }
-            }
-        });
     }
 
     onFinish = (fieldsValue: any) => {
@@ -674,6 +618,31 @@ class RegisterPanel extends React.Component<RouteComponentProps, {}> {
 
 @observer
 class StartPage extends React.Component<{}, {}> {
+    componentDidMount() {
+        $.ajax({
+            type: "GET",
+            url: SERVER_ADDR + "/isLogin",
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: data => {
+                if (data.is_login!) {
+                    if (data.type! === 'patient') {
+                        window.location.href = '/patient.html';
+                    } else if (data.type! === 'doctor') {
+                        window.location.href = '/doctor.html';
+                    } else if (data.type! === 'front') {
+                        window.location.href = '/staff.html#/frontDesk';
+                    } else if (data.type! === 'dispenser') {
+                        window.location.href = '/patient.html#/dispenser';
+                    }
+                }
+            }
+        });
+    }
+
+
     render() {
         return (
             <>

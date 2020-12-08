@@ -33,7 +33,15 @@ class Navbar extends React.Component<{}, {}> {
             },
             success: data => {
                 if (data.is_login!) {
-                    this.myState.displayName = data.name!;
+                    if (data.type! === 'patient') {
+                        window.location.href = '/patient.html';
+                    } else if (data.type! === 'doctor') {
+                        window.location.href = '/doctor.html';
+                    } else if (data.type! === 'front') {
+                        this.myState.displayName = data.name!;
+                    } else if (data.type! === 'dispenser') {
+                        this.myState.displayName = data.name!;
+                    }
                 } else {
                     window.location.href = "/";
                 }
