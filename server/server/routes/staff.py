@@ -4,7 +4,7 @@ from hashlib import md5
 import datetime
 
 from server import app, db
-from server.model import Staff, Patient, Appointment
+from server.data.model import Staff, Patient
 from server.service.chat import StaffChatService
 
 

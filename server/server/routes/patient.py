@@ -5,7 +5,7 @@ from flask import request, jsonify, session
 from flask_login import logout_user, login_required, current_user, login_user
 
 from server import app, db
-from server.model import Patient, Doctor, Record
+from server.data.model import Patient, Doctor, Record
 from server.service.chat import PatientChatService
 
 
@@ -27,7 +27,7 @@ def patient_login():
                        error_message='Wrong password')
 
     login_user(patient)
-    chat = PatientChatService()
+    chat = PatientChatService(patient)
     patient.chat = chat
     return jsonify(success=True)
 

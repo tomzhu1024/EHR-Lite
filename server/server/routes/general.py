@@ -2,7 +2,7 @@ from flask import jsonify
 from flask_login import current_user
 
 from server import app
-from server.model import Patient, Doctor, Admin, Staff
+from server.data.model import Patient, Doctor, Admin, Staff
 
 
 @app.route('/isLogin', methods=['GET'])

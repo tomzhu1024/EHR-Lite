@@ -1,4 +1,3 @@
-import pymysql
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -22,7 +21,7 @@ from server.routes.patient import *
 from server.routes.doctor import *
 from server.routes.staff import *
 from server.routes.admin import *
-from server.model import Patient, Doctor, Admin, Staff
+from server.data.model import Patient, Doctor, Admin, Staff
 
 
 @loginManager.user_loader

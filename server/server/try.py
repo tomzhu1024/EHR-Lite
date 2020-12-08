@@ -1,4 +1,4 @@
-from server.model import *
+from server.data.model import *
 import datetime
 if __name__ == '__main__':
     p = Patient.query.first()

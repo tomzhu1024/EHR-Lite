@@ -1,5 +1,5 @@
 import unittest
-from server.model import *
+from server.data.model import *
 from server import db
 
 

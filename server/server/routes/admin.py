@@ -2,11 +2,10 @@ import datetime
 from hashlib import md5
 
 from flask import request, jsonify
-from flask_login import logout_user, login_required, login_user, current_user
-
+from flask_login import logout_user, login_required, login_user
 
 from server import app, db
-from server.model import Doctor, Admin, Staff
+from server.data.model import Doctor, Admin, Staff
 
 
 @app.route("/admin/login", methods=['POST'])
