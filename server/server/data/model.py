@@ -13,6 +13,9 @@ class Patient(db.Model, UserMixin):
     birthday = db.Column(db.Date, nullable=False)
     records = db.relationship('Record', backref='patient')
 
+
+    def set_chat(self, chat):
+        self.chat = chat
     def __repr__(self):
         return self.name
 

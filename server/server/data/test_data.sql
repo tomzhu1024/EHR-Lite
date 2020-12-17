@@ -22,7 +22,7 @@ INSERT INTO `staff`(`name`, `password`, `role`) VALUES
 ('dispenser', 'a3018c96a8cdc6e3e6dc47733832925c', 'dispenser');
 
 INSERT INTO `staff`(`name`, `password`, `role`, `online`) VALUES
-('front', 'a3018c96a8cdc6e3e6dc47733832925c', 'front', False);
+('front', 'a3018c96a8cdc6e3e6dc47733832925c', 'front');
 
 INSERT INTO `schedule`(`doctor_id`, `start_time`, `end_time`, `capacity`, `weekday`) VALUES
 (1, '9:00', '12:00', 5, 0),

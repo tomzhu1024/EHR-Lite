@@ -61,7 +61,6 @@ CREATE TABLE `staff`(
 	`name` VARCHAR (10) NOT NULL,
 	`password` VARCHAR(50) NOT NULL,
 	`role` VARCHAR(20) NOT NULL,
-	`online` BOOLEAN,
 	PRIMARY KEY(`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

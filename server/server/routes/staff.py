@@ -5,7 +5,6 @@ import datetime
 
 from server import app, db
 from server.data.model import Staff, Patient
-from server.service.chat import StaffChatService
 
 
 @app.route('/staff/login', methods=['POST'])
@@ -24,11 +23,6 @@ def staff_login():
         return jsonify(success=False,
                        error_message='Wrong password')
     login_user(staff)
-    if staff.role == 'front':
-        staff.online = True
-        db.session.commit()
-        chat = StaffChatService(staff)
-        staff.chat = chat
 
     return jsonify(success=True,
                    role=staff.role)
